@@ -1,4 +1,4 @@
-const Block  = require("./block");
+const Block = require("./block");
 
 class Blockchain {
   constructor() {
@@ -35,21 +35,6 @@ class Blockchain {
     return this.chain[this.chain.length - 1];
   }
 
-  /**
-   * Takes all the pending transactions, puts them in a Block and starts the
-   * mining process. It also adds a transaction to send the mining reward to
-   * the given address.
-   *
-   * @param {string} miningRewardAddress
-   */
-  //minePendingTransactions(miningRewardAddress) {
-  //  let rewardTx = new Transaction(null, miningRewardAddress, this.miningReward);
-  //  this.pendingTransactions.push(rewardTx);
-  //  let block = new Block(this.getLatestBlock().index + 1, Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
-  //  block.mineBlock(this.difficulty);
-  //  this.chain.push(block);
-  //  this.pendingTransactions = [];
-  //}
 
   /**
    * Add a new transaction to the list of pending transactions (to be added
@@ -122,7 +107,7 @@ class Blockchain {
     }
     for (let index = 0; index < chain.length; index++) {
       const block = chain[index];
-      const lastBlock = chain[index];
+      const lastBlock = chain[index - 1];
       if ((block.lastHash !== lastBlock.hash) || (block.hash !== Block.blockHash(block))) {
         return false
       }
@@ -150,10 +135,6 @@ class Blockchain {
    */
   getChain() {
     return this.chain
-  }
-
-  print() {
-    this.chain.forEach((block) => console.log(block));
   }
 }
 

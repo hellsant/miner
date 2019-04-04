@@ -1,10 +1,10 @@
 const webSocket = require('ws')
 
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
-// const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
+//const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
 const P2P_PORT = process.env.P2P_PORT || 5001;
 
-const MEESAGE_TYPES = { hain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions:'CLEAR_TRANSACTIONS' }
+const MEESAGE_TYPES = { hain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
 class p2pServer {
     constructor(blockChain, transactionPool) {
         this.blockChain = blockChain;
@@ -15,7 +15,7 @@ class p2pServer {
     listen() {
 
         const server = new webSocket.Server({ port: P2P_PORT });
-        server.on('conection', socket => this.connectSocket(socket));
+        server.on('connection', socket => this.connectSocket(socket));
         this.conectToPeers();
         console.log('escuchando peers conections en el puerto : ' + P2P_PORT)
     }
@@ -23,7 +23,7 @@ class p2pServer {
     conectToPeers() {
         peers.forEach(peer => {
             const socket = new webSocket(peer);
-            socket.on('open', () => this.connectSocket(socket));
+            socket.on('open', ()=> this.connectSocket(socket));
         })
     }
 
@@ -44,7 +44,7 @@ class p2pServer {
                 case MEESAGE_TYPES.transaction:
                     this.transactionPool.updateOrAddTransaction(data.transaction)
                     break;
-                    case MEESAGE_TYPES.clear_transactions:
+                case MEESAGE_TYPES.clear_transactions:
                     this.transactionPool.clear()
                     break;
             }
@@ -75,7 +75,7 @@ class p2pServer {
             this.sendTransaction(socket, transaction)
         });
     }
-    broadcastClearTrasnsactions(){
+    broadcastClearTrasnsactions() {
         this.sockets.forEach(socket => {
             socket.send(JSON.stringify({
                 type: MEESAGE_TYPES.clear_transactions

@@ -33,7 +33,7 @@ app.get('/transactions', (req, res) => {
 })
 
 app.get('/public-key', (req, res) => {
-    res.json({publicKey: wallet.publicKey})
+    res.json({ publicKey: wallet.publicKey })
 })
 
 app.post('/transact', (req, res) => {

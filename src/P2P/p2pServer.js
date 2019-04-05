@@ -59,11 +59,11 @@ class p2pServer {
             const data = JSON.parse(message);
             switch (data.type) {
                 case MEESAGE_TYPES.chain:
-                this.blockChain.replaceChain(data.chain)
-                break;
+                    this.blockChain.replaceChain(data.chain)
+                    break;
                 case MEESAGE_TYPES.transaction:
-                this.transactionPool.updateOrAddTransaction(data.transaction)
-                break;
+                    this.transactionPool.updateOrAddTransaction(data.transaction)
+                    break;
                 case MEESAGE_TYPES.clear_transactions:
                     this.transactionPool.clear()
                     break;
@@ -133,13 +133,13 @@ class p2pServer {
     addPeer(host, port) {
         let connection = new webSocket(`ws://${host}:${port}`)
         connection.on('error', (error) => {
-          console.log(error)
-      })
+            console.log(error)
+        })
 
-      connection.on('open', (msg) => {
-          //this.conectToPeers();
-          this.connectSocket(connection)
-      })
+        connection.on('open', (msg) => {
+            //this.conectToPeers();
+            this.connectSocket(connection)
+        })
     }
 }
 

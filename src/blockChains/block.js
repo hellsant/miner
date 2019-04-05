@@ -5,16 +5,16 @@ const { DIFFICULTY, MIME_RATE } = require('../config/config')
  */
 class Block {
 
- /**
-  * 
-  * @param {timestamp} timestamp 
-  * @param {lasHash} lastHash 
-  * @param {hash} hash 
-  * @param {data} data 
-  * @param {nonce} nonce 
-  * @param {diffiulty} difficulty 
-  * @param {processTime} processTime 
-  */
+  /**
+   * 
+   * @param {timestamp} timestamp 
+   * @param {lasHash} lastHash 
+   * @param {hash} hash 
+   * @param {data} data 
+   * @param {nonce} nonce 
+   * @param {diffiulty} difficulty 
+   * @param {processTime} processTime 
+   */
   constructor(timestamp, lastHash, hash, data, nonce, difficulty, processTime) {
     this.timestamp = timestamp;
     this.lastHash = lastHash;
@@ -48,7 +48,7 @@ class Block {
       nonce++
       timestamp = Date.now()
       difficulty = Block.adjustDifficulty(lastBlock, timestamp)
-      hash = Block.hash(timestamp, lastHash, data, nonce)
+      hash = Block.hash(timestamp, lastHash, data, nonce, difficulty)
     } while (hash.substring(0, difficulty) !== Array(difficulty + 1).join('0'))
     let t2 = Date.now();
     let processTime = t2 - t1

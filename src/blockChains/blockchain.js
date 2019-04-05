@@ -107,7 +107,7 @@ class Blockchain {
         console.log('hash anterior incorrecto')
         return false
       }
-      if(block.hash !== Block.blockHash(block)) {
+      if (block.hash !== Block.blockHash(block)) {
         console.log('hash actual incorrecto')
         return false
       }
@@ -128,7 +128,7 @@ class Blockchain {
       console.log("la cadena recibida no es valida")
       return
     }
-     this.chain = newChain
+    return this.chain = newChain
   }
 
   /**

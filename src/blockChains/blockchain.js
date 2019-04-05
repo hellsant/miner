@@ -1,5 +1,7 @@
 const Block = require("./block");
-
+/**
+ * 
+ */
 class Blockchain {
   constructor() {
     this.chain = [Block.genesis()];
@@ -16,13 +18,6 @@ class Blockchain {
     const block = Block.mineBlock(this.getLatestBlock(), data);
     this.chain.push(block);
     return block;
-  }
-
-  /**
-   * @returns {Block}
-   */
-  createGenesisBlock() {
-    return new Block(0, Date.parse('2019-01-01'), "nodo genesis", '0');
   }
 
   /**
@@ -105,13 +100,19 @@ class Blockchain {
     if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
       return false
     }
-    for (let index = 0; index < chain.length; index++) {
-      const block = chain[index];
-      const lastBlock = chain[index - 1];
-      if ((block.lastHash !== lastBlock.hash) || (block.hash !== Block.blockHash(block))) {
+    for (let i = 1; i < chain.length; i++) {
+      const block = chain[i];
+      const lastBlock = chain[i - 1];
+      if (block.lastHash !== lastBlock.hash) {
+        console.log('hash anterior incorrecto')
+        return false
+      }
+      if(block.hash !== Block.blockHash(block)) {
+        console.log('hash actual incorrecto')
         return false
       }
     }
+    return true
   }
 
   /**
@@ -119,6 +120,7 @@ class Blockchain {
    * @param newChain
    */
   replaceChain(newChain) {
+
     if (newChain.length <= this.chain.length) {
       console.log("La cadena recibida es mas corta que la actual")
       return
@@ -126,7 +128,7 @@ class Blockchain {
       console.log("la cadena recibida no es valida")
       return
     }
-    this.chain = newChain
+     this.chain = newChain
   }
 
   /**

@@ -1,11 +1,22 @@
 
 const Transaction = require('./transaction');
+
+/**
+ * 
+ */
 class TransactionPool {
+    
+    /**
+     * 
+     */
     constructor() {
         this.transactions = [];
     }
 
-
+    /**
+     * 
+     * @param {transactions} transactions 
+     */
     updateOrAddTransaction(transactions) {
         let transactionWithId = this.transactions.find(t => t.id === transactions.id)
         if (transactionWithId) {
@@ -15,10 +26,18 @@ class TransactionPool {
             this.transactions.push(transactions)
         }
     }
+
+    /**
+     * 
+     * @param {address} address 
+     */
     existingTransaction(address) {
         return this.transactions.find(t => t.input.address === address)
     }
 
+    /**
+     * 
+     */
     validTransactions() {
         return this.transactions.filter(transaction => {
             const outputTotal = transaction.outputs.reduce((total, output) => {
@@ -35,7 +54,10 @@ class TransactionPool {
         })
     }
 
-    clear(){
+    /**
+     * 
+     */
+    clear() {
         this.transactions = []
     }
 }

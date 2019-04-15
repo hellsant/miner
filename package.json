@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-test": "nodemon dev-test",
-    "dev": "nodemon ./src/app"
+    "dev": "nodemon ./src/app",
+    "view": "nodemon ./view"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +17,14 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
     "crypto-js": "^3.1.9-1",
+    "ejs": "^2.6.1",
     "elliptic": "^6.4.1",
     "express": "^4.16.4",
     "js-sha3": "^0.8.0",
+    "morgan": "^1.9.1",
+    "sha3": "^2.0.1",
     "uuid": "^3.3.2",
     "ws": "^6.2.1"
   }

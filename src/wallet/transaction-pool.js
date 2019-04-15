@@ -44,11 +44,11 @@ class TransactionPool {
                 return total + output.amount
             }, 0)
             if (transaction.input.amount !== outputTotal) {
-                console.log('invalid transaction from :' + transaction.input.address)
+                console.log(`invalid transaction from: ${transaction.input.address}`)
                 return
             }
             if (!Transaction.verifyTransaction(transaction)) {
-                console.log('invalid signature from :' + transaction.input.address)
+                console.log(`invalid signature from: ${transaction.input.address}`)
                 return
             }
         })

@@ -42,7 +42,7 @@ class Wallet {
      */
     createTransaction(recipient, amount, transactionPool) {
         if (amount > this.balance) {
-            console.log('amount exede el valance: ' + amount + 'balance:' + this.balance)
+            console.log(`amount exede el valance: ${amount} balance: ${this.balance}`)
             return;
         }
         let transaction = transactionPool.existingTransaction(this.publicKey)

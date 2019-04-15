@@ -22,7 +22,7 @@ class Transaction {
     update(senderWallet, recipient, amount) {
         const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey)
         if (amount > senderOutput.amount) {
-            console.log('amount exede el valalce' + amount)
+            console.log(`amount exede el valalce: ${amount}`)
             return
         }
         senderOutput.amount = senderOutput.amount - amount
@@ -39,7 +39,7 @@ class Transaction {
      */
     static newTransaction(senderWallet, recipient, amount) {
         if (amount > senderWallet.balance) {
-            console.log('exede el valance: ' + amount)
+            console.log(`exede el valance: ${amount}`)
             return;
         }
         return Transaction.transactionWithOutputs(senderWallet, [

@@ -15,7 +15,8 @@ class Block {
    * @param {diffiulty} difficulty 
    * @param {processTime} processTime 
    */
-  constructor(timestamp, lastHash, hash, data, nonce, difficulty, processTime) {
+  constructor(index, timestamp, lastHash, hash, data, nonce, difficulty, processTime) {
+    this.index = index;
     this.timestamp = timestamp;
     this.lastHash = lastHash;
     this.hash = hash;
@@ -29,7 +30,7 @@ class Block {
    * 
    */
   static genesis() {
-    return new this(Date.parse('2019-01-01'), '0'.repeat(64), '0'.repeat(64), [], 0, DIFFICULTY, 0);
+    return new this(0, Date.parse('2019-01-01'), '0'.repeat(64), '0'.repeat(64), 'Genesis Node', 0, DIFFICULTY, 0);
   }
 
   /**
@@ -38,21 +39,22 @@ class Block {
    * @param {data} data 
    */
   static mineBlock(lastBlock, data) {
+    const t1 = Date.now()
+    const newIndex = lastBlock.index + 1
+    const lastHash = lastBlock.hash
     let hash
     let timestamp
-    const lastHash = lastBlock.hash
     let { difficulty } = lastBlock
-    let nonce = 0;
-    let t1 = Date.now()
+    let nonce = 0
     do {
       nonce++
       timestamp = Date.now()
       difficulty = Block.adjustDifficulty(lastBlock, timestamp)
-      hash = Block.hash(timestamp, lastHash, data, nonce, difficulty)
+      hash = Block.hasher(newIndex, timestamp, lastHash, data, nonce, difficulty)
     } while (hash.substring(0, difficulty) !== Array(difficulty + 1).join('0'))
-    let t2 = Date.now();
-    let processTime = t2 - t1
-    return new this(timestamp, lastHash, hash, data, nonce, difficulty, processTime)
+    const t2 = Date.now()
+    const processTime = t2 - t1
+    return new this(newIndex, timestamp, lastHash, hash, data, nonce, difficulty, processTime)
   }
 
   /**
@@ -74,8 +76,8 @@ class Block {
    * @param {nonce} nonce 
    * @param {difficulty} difficulty 
    */
-  static hash(timestamp, lastHash, data, nonce, difficulty) {
-    return ChainUtil.hash(timestamp + lastHash + data + nonce + difficulty).toString();
+  static hasher(index, timestamp, lastHash, data, nonce, difficulty) {
+    return ChainUtil.hash(index + timestamp + lastHash + data + nonce + difficulty).toString();
   }
 
   /**
@@ -83,20 +85,7 @@ class Block {
    * @param {block} block 
    */
   static blockHash(block) {
-    const { timestamp, lastHash, data, nonce, difficulty } = block;
-    return Block.hash(timestamp, lastHash, data, nonce, difficulty);
-  }
-
-  /**
-   * 
-   */
-  hasValidTransactions() {
-    for (const tx of this.transactions) {
-      if (!tx.isValid()) {
-        return false;
-      }
-    }
-    return true;
+    return Block.hasher(block.index, block.timestamp, block.lastHash, block.data, block.nonce, block.difficulty);
   }
 }
 

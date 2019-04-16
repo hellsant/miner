@@ -33,7 +33,6 @@ router.get('/block', (req, res) => {
 router.post('/addBlock', (req, res) => {
     blockChain.addBlock(req.body.data);
     p2pServer.syncChains();
-    console.log(req.body.data)
     res.redirect('/')
 })
 

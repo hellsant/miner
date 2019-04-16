@@ -1,4 +1,4 @@
-const webSocket = require('ws')
+const webSocket = require('ws');
 
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
@@ -134,15 +134,19 @@ class p2pServer {
         let connection = new webSocket(`ws://${host}:${port}`)
         connection.on('error', (error) => {
             console.log(error)
-        })
-
+        }) 
         connection.on('open', (msg) => {
             //this.conectToPeers();
             this.connectSocket(connection)
         })
     }
 
-    getP2Pport(){
+    closeConnection(connection) {
+        console.log('closing connection')
+        this.sockets.splice(this.sockets.indexOf(connection), 1)
+    }
+
+    getP2Pport() {
         return P2P_PORT
     }
 }

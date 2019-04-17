@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const SHA512 = require('js-sha3').sha3_512;
 
 class HashCalculator{
@@ -7,7 +8,7 @@ class HashCalculator{
    *
    * @returns {string}
    */
-   calculateTransactionHash(transaction) {
+   calculateTransactionHash() {
     return SHA512(fromAddress + toAddress + amount + timestamp).toString();
   }
   
@@ -17,7 +18,7 @@ class HashCalculator{
    *
    * @returns {string}
    */
-  calculateBlockHash(block) {
+  calculateBlockHash() {
     return SHA512( index + previousHash + timestamp + JSON.stringify(transactions) + nonce).toString();
   }
 }

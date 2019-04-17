@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 const express = require('express');
 const morgan = require('morgan')
 const bodyParser = require('body-parser');
-const HTTP_PORT = process.env.HTTP_PORT || 3000 + Math.floor(Math.random() * 10);
-//const HTTP_PORT = process.env.HTTP_PORT || 3000;
+//const HTTP_PORT = process.env.HTTP_PORT || 3000 + Math.floor(Math.random() * 10);
+const HTTP_PORT = process.env.HTTP_PORT || 3001;
 const Blockchain = require('../blockChains/blockchain');
 const P2pServer = require('../P2P/p2pServer');
 const TransactionPool = require('../wallet/transaction-pool')
@@ -28,7 +29,7 @@ app.post('/mine', (req, res) => {
     res.redirect('/block')
 })
 
-app.get('/p2pPort',(req , res)=>{
+app.get('/p2pPort', (req, res) => {
     res.json(p2pServer.getP2Pport())
 })
 
@@ -42,20 +43,24 @@ app.get('/public-key', (req, res) => {
 
 app.post('/transact', (req, res) => {
     const { recipient, amount } = req.body;
-    const transaction = wallet.createTransaction(recipient, amount, transactionPool);
+    const transaction = wallet.createTransaction(recipient, amount, blockChain, transactionPool);
     p2pServer.broadcastTrasnsaction(transaction)
     res.redirect('/transactions')
 })
 
-app.get('/addPeer/:port', (req, res) => {    
+app.get('/mine-transactions', (req, res) => {
+    const block = miner.mine();
+    Console.log(`New block added: ${block.toString()}`);
+    res.redirect('/block');
+});
+
+app.get('/addPeer/:port', (req, res) => {
     p2pServer.addPeer(req.hostname, req.params.port)
     res.redirect('back')
 })
 
 app.listen(HTTP_PORT, () => {
-    console.log('HTTP servet listening :' + HTTP_PORT)
+    Console.log('HTTP servet listening:', HTTP_PORT)
 });
 
-p2pServer.listen(()=>{
-    miner.mine()
-});
+p2pServer.listen();

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const Block = require("./block");
 /**
  * 
@@ -35,18 +36,12 @@ class Blockchain {
    * @returns {boolean}
    */
   isValidChain(chain) {
-    if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
-      return false
-    }
+    if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false
+
     for (let i = 1; i < chain.length; i++) {
       const block = chain[i];
       const lastBlock = chain[i - 1];
-      if (block.lastHash !== lastBlock.hash) {
-        console.log('hash anterior incorrecto')
-        return false
-      }
-      if (block.hash !== Block.blockHash(block)) {
-        console.log('hash actual incorrecto')
+      if (block.lastHash !== lastBlock.hash || block.hash !== Block.blockHash(block)) {
         return false
       }
     }
@@ -59,13 +54,14 @@ class Blockchain {
    */
   replaceChain(newChain) {
     if (newChain.length <= this.chain.length) {
-      console.log("La cadena recibida es mas corta que la actual")
+      Console.log("La cadena recibida es mas corta que la actual")
       return
     } else if (!this.isValidChain(newChain)) {
-      console.log("la cadena recibida no es valida")
+      Console.log("la cadena recibida no es valida")
       return
     }
-    return this.chain = newChain
+    //return this.chain = newChain
+    this.chain = newChain
   }
 
   /**

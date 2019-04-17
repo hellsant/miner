@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const ChainUtil = require('../keys/chain-utils')
 const { DIFFICULTY, MIME_RATE } = require('../config/config')
 /**
@@ -85,7 +86,23 @@ class Block {
    * @param {block} block 
    */
   static blockHash(block) {
-    return Block.hasher(block.index, block.timestamp, block.lastHash, block.data, block.nonce, block.difficulty);
+    const { index, timestamp, lastHash, data, nonce, difficulty } = block;
+    return Block.hasher(index, timestamp, lastHash, data, nonce, difficulty);
+  }
+  
+  /**
+   * 
+   */
+  toString() {
+    return `Block -
+      Index      : ${this.index}
+      Timestamp  : ${this.timestamp}
+      Last Hash  : ${this.lastHash.substring(0, 10)}
+      Hash       : ${this.hash.substring(0, 10)}
+      Nonce      : ${this.nonce}
+      Difficulty : ${this.difficulty}
+      Data       : ${this.data}
+      ProsessTime: ${this.processTime}`;
   }
 }
 

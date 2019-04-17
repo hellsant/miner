@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require('express');
 const Blockchain = require('../../src/blockChains/blockchain');
 const P2pServer = require('../../src/P2P/p2pServer');
@@ -41,7 +42,7 @@ router.get('/addBlock', (req, res) => {
 })
 router.post('/mine', (req, res) => {
     miner.mine();
-    console.log(blockChain.getChain())
+    Console.log(blockChain.getChain())
     res.redirect('/')
 })
 
@@ -50,7 +51,7 @@ router.get('/mine', (req, res) => {
 })
 
 
-router.get('/p2pPort',(req , res)=>{
+router.get('/p2pPort', (req, res) => {
     res.json(p2pServer.getP2Pport())
 })
 
@@ -64,17 +65,16 @@ router.get('/public-key', (req, res) => {
 
 router.post('/send', (req, res) => {
     const { recipient, amount } = req.body;
-    const transaction = wallet.createTransaction(recipient, amount, transactionPool);
+    const transaction = wallet.createTransaction(recipient, amount, blockChain, transactionPool);
     p2pServer.broadcastTrasnsaction(transaction)
     res.redirect('/')
 })
 
 router.get('/send', (req, res) => {
-   res.render('sendTransaction.html')
+    res.render('sendTransaction.html')
 })
 
 router.get('/addPeer/:port', (req, res) => {
-    
     p2pServer.addPeer(req.hostname, req.params.port)
     res.redirect('back')
     //res.redirect('/block')

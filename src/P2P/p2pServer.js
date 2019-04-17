@@ -1,10 +1,10 @@
+/* eslint-disable no-undef */
 const webSocket = require('ws');
-
-const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
 //const P2P_PORT = process.env.P2P_PORT || 5001;
-
+const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const MEESAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
+
 /**
  * 
  */
@@ -27,7 +27,7 @@ class p2pServer {
         const server = new webSocket.Server({ port: P2P_PORT });
         server.on('connection', socket => this.connectSocket(socket));
         this.conectToPeers();
-        console.log(`escuchando peers conections en el puerto: ${P2P_PORT}`)
+        Console.log(`escuchando peers conections en el puerto: ${P2P_PORT}`)
     }
 
     /**
@@ -46,7 +46,7 @@ class p2pServer {
      */
     connectSocket(socket) {
         this.sockets.push(socket);
-        console.log('[+] conection Soket');
+        Console.log('[+] conection Soket');
         this.messageHandler(socket);
         this.sendChain(socket);
     }
@@ -68,7 +68,7 @@ class p2pServer {
                     this.transactionPool.clear()
                     break;
                 default:
-                    console.log('Unknown message ')
+                    Console.log('Unknown message ')
             }
         })
     }
@@ -133,16 +133,16 @@ class p2pServer {
     addPeer(host, port) {
         let connection = new webSocket(`ws://${host}:${port}`)
         connection.on('error', (error) => {
-            console.log(error)
+            Console.log(error)
         }) 
-        connection.on('open', (msg) => {
+        connection.on('open', () => {
             //this.conectToPeers();
             this.connectSocket(connection)
         })
     }
 
     closeConnection(connection) {
-        console.log('closing connection')
+        Console.log('closing connection')
         this.sockets.splice(this.sockets.indexOf(connection), 1)
     }
 

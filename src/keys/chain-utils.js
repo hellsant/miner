@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 //const SHA512 = require('js-sha3').sha3_256;
@@ -26,7 +27,8 @@ class ChainUtil {
      * @param {data} data 
      */
     static hash(data) {
-        return SHA512(data).toString();
+        //return SHA512(data).toString();
+        return SHA512(JSON.stringify(data)).toString();
     }
 
     /**

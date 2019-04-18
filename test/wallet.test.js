@@ -1,10 +1,13 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-undef */
 const Wallet = require('../src/wallet/index');
 const TransactionPool = require('../src/wallet/transaction-pool');
 const Blockchain = require('../src/blockChains/blockchain');
 const { INITIAL_BALANCE } = require('../src/config/config');
 
 describe('Wallet', () => {
-  let wallet, tp, bc;
+  let bc, tp, wallet;
 
   beforeEach(() => {
     wallet = new Wallet();
@@ -13,7 +16,7 @@ describe('Wallet', () => {
   });
 
   describe('creating a transaction', () => {
-    let transaction, sendAmount, recipient;
+    let recipient, sendAmount, transaction;
 
     beforeEach(() => {
       sendAmount = 50;
@@ -27,13 +30,14 @@ describe('Wallet', () => {
       });
 
       it('doubles the `sendAmount` subtracted from the wallet balance', () => {
-        expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-          .toEqual(wallet.balance - sendAmount * 2);
+        expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).
+          toEqual(wallet.balance - sendAmount * 2);
       });
 
       it('clones the `sendAmount` output for the recipient', () => {
-        expect(transaction.outputs.filter(output => output.address === recipient)
-          .map(output => output.amount)).toEqual([sendAmount, sendAmount]);
+        expect(transaction.outputs.filter(output => output.address === recipient).
+          map(output => output.amount)).toEqual([sendAmount,
+sendAmount]);
       });
     });
   });
@@ -52,15 +56,15 @@ describe('Wallet', () => {
     });
 
     it('calculates the balance for blockchain transactions matching the recipient', () => {
-      expect(wallet.calculateBalance(bc)).toEqual(INITIAL_BALANCE + (addBalance * repeatAdd));
+      expect(wallet.calculateBalance(bc)).toEqual(INITIAL_BALANCE + addBalance * repeatAdd);
     });
 
     it('calculates the balance for blockchain transactions matching the sender', () => {
-      expect(senderWallet.calculateBalance(bc)).toEqual(INITIAL_BALANCE - (addBalance * repeatAdd));
+      expect(senderWallet.calculateBalance(bc)).toEqual(INITIAL_BALANCE - addBalance * repeatAdd);
     });
 
     describe('and the recipient conducts a transaction', () => {
-      let subtractBalance, recipientBalance;
+      let recipientBalance, subtractBalance;
 
       beforeEach(() => {
         tp.clear();

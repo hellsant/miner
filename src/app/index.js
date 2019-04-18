@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const express = require('express');
 const morgan = require('morgan')
@@ -50,7 +51,7 @@ app.post('/transact', (req, res) => {
 
 app.get('/mine-transactions', (req, res) => {
     const block = miner.mine();
-    Console.log(`New block added: ${block.toString()}`);
+    console.log(`New block added: ${block.toString()}`);
     res.redirect('/block');
 });
 
@@ -60,7 +61,7 @@ app.get('/addPeer/:port', (req, res) => {
 })
 
 app.listen(HTTP_PORT, () => {
-    Console.log('HTTP servet listening:', HTTP_PORT)
+    console.log('HTTP servet listening:', HTTP_PORT)
 });
 
 p2pServer.listen();

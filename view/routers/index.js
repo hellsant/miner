@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const express = require('express');
 const Blockchain = require('../../src/blockChains/blockchain');
@@ -42,7 +43,7 @@ router.get('/addBlock', (req, res) => {
 })
 router.post('/mine', (req, res) => {
     miner.mine();
-    Console.log(blockChain.getChain())
+    console.log(blockChain.getChain())
     res.redirect('/')
 })
 

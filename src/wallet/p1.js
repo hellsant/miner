@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const Wallet = require('./index');
@@ -19,6 +20,6 @@ tx.input.amount= 999;
 //console.log(tp.transactions.find(t=>t.id === tr.id) === tx)
 
 tp.transactions.forEach(t => {
-     Console.log(t)
+     console.log(t)
      
  });

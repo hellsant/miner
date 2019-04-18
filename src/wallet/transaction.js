@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const ChainUtil = require('../keys/chain-utils');
 const { MINING_REWARD } = require('../config/config')
@@ -23,7 +24,7 @@ class Transaction {
     update(senderWallet, recipient, amount) {
         const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey)
         if (amount > senderOutput.amount) {
-            Console.log(`amount exede el valalce: ${amount}`)
+            console.log(`amount exede el valalce: ${amount}`)
             return
         }
         senderOutput.amount = senderOutput.amount - amount
@@ -40,7 +41,7 @@ class Transaction {
      */
     static newTransaction(senderWallet, recipient, amount) {
         if (amount > senderWallet.balance) {
-            Console.log(`exede el valance: ${amount}`)
+            console.log(`exede el valance: ${amount}`)
             return;
         }
         return Transaction.transactionWithOutputs(senderWallet, [

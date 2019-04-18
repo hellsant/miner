@@ -1,9 +1,13 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undefined */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-undef */
 const Transaction = require('../src/wallet/transaction');
 const Wallet = require('../src/wallet/index');
 const { MINING_REWARD } = require('../src/config/config');
 
 describe('Transaction', () => {
-    let transaction, wallet, recipient, amount;
+    let amount, recipient, transaction, wallet;
 
     beforeEach(() => {
         wallet = new Wallet();
@@ -13,13 +17,13 @@ describe('Transaction', () => {
     });
 
     it('outputs the `amount` subtracted from the wallet balance', () => {
-        expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-            .toEqual(wallet.balance - amount);
+        expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).
+            toEqual(wallet.balance - amount);
     });
 
     it('outputs the `amount` added to the recipient', () => {
-        expect(transaction.outputs.find(output => output.address === recipient).amount)
-            .toEqual(amount);
+        expect(transaction.outputs.find(output => output.address === recipient).amount).
+            toEqual(amount);
     });
 
     it('inputs the balance of the wallet', () => {
@@ -56,13 +60,13 @@ describe('Transaction', () => {
         });
 
         it(`subtracts the next amount from the sender's output`, () => {
-            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-                .toEqual(wallet.balance - amount - nextAmount);
+            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).
+                toEqual(wallet.balance - amount - nextAmount);
         });
 
         it('outputs an amount for the next recipient', () => {
-            expect(transaction.outputs.find(output => output.address === nextRecipient).amount)
-                .toEqual(nextAmount);
+            expect(transaction.outputs.find(output => output.address === nextRecipient).amount).
+                toEqual(nextAmount);
         });
     });
 
@@ -72,8 +76,8 @@ describe('Transaction', () => {
         });
 
         it(`reward the miner's wallet`, () => {
-            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount)
-                .toEqual(MINING_REWARD);
+            expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).
+                toEqual(MINING_REWARD);
         });
     });
 });

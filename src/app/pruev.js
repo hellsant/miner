@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const Blockchain = require('../blockChains/blockchain');
 const TransactionPool = require('../wallet/transaction-pool');
@@ -32,6 +33,6 @@ tp.updateOrAddTransaction(tx)
 const mine = new Miner(bc, tp, wall, p2p);
 for (let i = 0; i < 2; i++) {
     const valor = mine.mine();
-    Console.log(JSON.stringify(valor));
-    Console.log('---------------------------');
+    console.log(JSON.stringify(valor));
+    console.log('---------------------------');
 }

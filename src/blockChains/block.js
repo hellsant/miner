@@ -31,7 +31,7 @@ class Block {
    * 
    */
   static genesis() {
-    return new this(0, Date.parse('2019-01-01'), '0'.repeat(64), '0'.repeat(64), 'Genesis Node', 0, DIFFICULTY, 0);
+    return new this(0, Date.parse('2019-01-01'), '0'.repeat(64), '0'.repeat(64), [], 0, DIFFICULTY, 0);
   }
 
   /**

@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-undef */
 const Blockchain = require('../src/blockChains/blockchain');
 const Block = require('../src/blockChains/block');
 

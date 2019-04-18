@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,5 +21,5 @@ app.use(require('./routers'))
 
 //listenig server
 app.listen(app.get('port'), () => {
-    Console.log('server init', app.get('port'))
+    console.log('server init', app.get('port'))
 });

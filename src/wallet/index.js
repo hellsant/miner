@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const { INITIAL_BALANCE } = require('../config/config')
 const ChainUtil = require('../keys/chain-utils')
@@ -44,7 +45,7 @@ class Wallet {
     createTransaction(recipient, amount, blockchain, transactionPool) {
         this.balance = this.calculateBalance(blockchain)
         if (amount > this.balance) {
-            Console.log(`amount exede el valance: ${amount} balance: ${this.balance}`)
+            console.log(`amount exede el valance: ${amount} balance: ${this.balance}`)
             return;
         }
         let transaction = transactionPool.existingTransaction(this.publicKey)
@@ -64,7 +65,7 @@ class Wallet {
     calculateBalance(blockchain) {
         let balance = this.balance;
         let transactions = [];
-        blockchain.chain.forEach(block => block.data.forEach(transaction => {
+        blockchain.getChain().forEach(block => block.data.forEach(transaction => {
             transactions.push(transaction);
         }));
         const walletInputTs = transactions.filter(transaction => transaction.input.address === this.publicKey);

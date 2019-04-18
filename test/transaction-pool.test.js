@@ -1,10 +1,14 @@
-const Transaction = require('../src/wallet/transaction');
+/* eslint-disable no-console */
+/* eslint-disable eqeqeq */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 const Wallet = require('../src/wallet/index');
 const TransactionPool = require('../src/wallet/transaction-pool');
 const Blockchain = require('../src/blockChains/blockchain');
 
 describe('TransactionPool', () => {
-    let tp, wallet, transaction, bc;
+    let bc, tp, transaction, wallet;
 
     beforeEach(() => {
         tp = new TransactionPool();
@@ -22,8 +26,8 @@ describe('TransactionPool', () => {
         const newTransaction = transaction.update(wallet, 'fooddress', 40);
         tp.updateOrAddTransaction(newTransaction);
 
-        expect(JSON.stringify(tp.transactions.find(t => t.id === newTransaction.id)))
-            .not.toEqual(oldTransaction);
+        expect(JSON.stringify(tp.transactions.find(t => t.id === newTransaction.id))).
+            not.toEqual(oldTransaction);
     });
 
     it('clears transactions', () => {
@@ -40,7 +44,7 @@ describe('TransactionPool', () => {
                 wallet = new Wallet();
                 transaction = wallet.createTransaction('barddress', 30, bc, tp);
                 if (i % 2 == 0) {
-                    transaction.input.amount = 999999;
+                    transaction.input.amount = 99999;
                 } else {
                     validTransactions.push(transaction);
                 }

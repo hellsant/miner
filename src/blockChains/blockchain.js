@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const Block = require("./block");
 /**
@@ -54,10 +55,10 @@ class Blockchain {
    */
   replaceChain(newChain) {
     if (newChain.length <= this.chain.length) {
-      Console.log("La cadena recibida es mas corta que la actual")
+      console.log("La cadena recibida es mas corta que la actual")
       return
     } else if (!this.isValidChain(newChain)) {
-      Console.log("la cadena recibida no es valida")
+      console.log("la cadena recibida no es valida")
       return
     }
     //return this.chain = newChain

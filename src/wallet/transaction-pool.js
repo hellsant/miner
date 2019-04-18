@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const Transaction = require('./transaction');
 
@@ -44,11 +45,11 @@ class TransactionPool {
                 return total + output.amount
             }, 0)
             if (transaction.input.amount !== outputTotal) {
-                Console.log(`invalid transaction from: ${transaction.input.address}`)
+                console.log(`invalid transaction from: ${transaction.input.address}`)
                 return
             }
             if (!Transaction.verifyTransaction(transaction)) {
-                Console.log(`invalid signature from: ${transaction.input.address}`)
+                console.log(`invalid signature from: ${transaction.input.address}`)
                 return
             }
             return transaction

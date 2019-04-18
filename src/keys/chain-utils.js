@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-const sha3_512 = require('js-sha3').sha3_256;
-//const {SHA3}  = require('sha3');
-//const SHA512 = require('crypto-js/sha512');
-const uuid = require('uuid/v4');
+// //const sha3_512 = require('sha3').SHA3;
+// //const a = new sha3_512(512)
+const SHA512 = require('crypto-js/sha3');
+const uuidV4 = require('uuid/v4');
 /**
  * 
  */
@@ -20,7 +20,7 @@ class ChainUtil {
      * 
      */
     static id() {
-        return uuid();
+        return uuidV4();
     }
 
     /**
@@ -28,11 +28,9 @@ class ChainUtil {
      * @param {data} data 
      */
     static hash(data) {
-        //return SHA512(data).toString(); este funciona
-        
-        return sha3_512.update(data).toString();
-
-        //return SHA512(JSON.stringify(data)).toString();
+        return SHA512(data).toString();
+        //let res = a.update(data)
+        //return JSON.stringify(res)
     }
 
     /**

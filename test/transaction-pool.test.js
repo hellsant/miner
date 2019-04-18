@@ -1,8 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable eqeqeq */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 const Wallet = require('../src/wallet/index');
 const TransactionPool = require('../src/wallet/transaction-pool');
 const Blockchain = require('../src/blockChains/blockchain');
@@ -42,8 +39,8 @@ describe('TransactionPool', () => {
             validTransactions = [...tp.transactions];
             for (let i = 0; i < 6; i++) {
                 wallet = new Wallet();
-                transaction = wallet.createTransaction('barddress', 30, bc, tp);
-                if (i % 2 == 0) {
+                transaction = wallet.createTransaction('addressRecipend', 30, bc, tp);
+                if (i % 2 === 0) {
                     transaction.input.amount = 99999;
                 } else {
                     validTransactions.push(transaction);

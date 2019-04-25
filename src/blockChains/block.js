@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const ChainUtil = require('../keys/chain-utils')
-const { DIFFICULTY, MIME_RATE } = require('../config/config')
+const { DIFFICULTY, MINE_RATE } = require('../config/config')
 /**
  * 
  */
@@ -65,7 +65,7 @@ class Block {
    */
   static adjustDifficulty(lastBlock, currentTime) {
     let { difficulty } = lastBlock
-    difficulty = lastBlock.timestamp + MIME_RATE > currentTime ? difficulty + 1 : difficulty - 1
+    difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty + 1 : difficulty - 1
     return difficulty
   }
 

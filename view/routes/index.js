@@ -20,8 +20,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/blockchain', (req, res) => {
-    const blocks = blockChain.getChain();
-    res.render('blockchain', { blocks: blocks })
+    const block = blockChain.getChain();
+    res.render('blockchain', { blocks: block })
 });
 
 router.get('/peers', (req, res) => {
@@ -60,12 +60,12 @@ router.get('/p2pPort', (req, res) => {
 });
 
 router.get('/transaction', (req, res) => {
-    const tx = transactionPool.transactions
-    res.render('transaction', { tx: tx })
+    const transactions = transactionPool.transactions
+    res.render('transaction', { tx: transactions })
 })
 router.get('/wallet', (req, res) => {
-    const tx = transactionPool.existingTransaction(wallet.publicKey)
-    res.render('wallet', { tx: tx })
+    const transactions = transactionPool.existingTransaction(wallet.publicKey)
+    res.render('wallet', { tx: transactions })
 });
 
 router.get('/public-key', (req, res) => {
@@ -75,8 +75,8 @@ router.get('/public-key', (req, res) => {
 router.post('/send', (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, amount, blockChain, transactionPool);
-    p2pServer.broadcastTrasnsaction(transaction)
-    res.redirect('/')
+    p2pServer.broadcastTransaction(transaction)
+    res.redirect('transaction')
 });
 
 router.get('/send', (req, res) => {

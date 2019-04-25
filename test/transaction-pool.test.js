@@ -39,8 +39,9 @@ describe('TransactionPool', () => {
             validTransactions = [...tp.transactions];
             for (let i = 0; i < 6; i++) {
                 wallet = new Wallet();
-                transaction = wallet.createTransaction('addressRecipend', 30, bc, tp);
-                if (i % 2 === 0) {
+                transaction = wallet.createTransaction('barddress', 30, bc, tp);
+                // eslint-disable-next-line eqeqeq
+                if (i % 2 == 0) {
                     transaction.input.amount = 99999;
                 } else {
                     validTransactions.push(transaction);

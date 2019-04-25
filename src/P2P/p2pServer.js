@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-const webSocket = require('ws');
+const Websocket = require('ws');
 const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
 //const P2P_PORT = process.env.P2P_PORT || 5001;
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
-const MEESAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
+const MESSAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
 
 /**
  * 
@@ -15,8 +15,8 @@ class p2pServer {
      * @param {blockChain} blockChain 
      * @param {transactionPool} transactionPool 
      */
-    constructor(blockChain, transactionPool) {
-        this.blockChain = blockChain;
+    constructor(blockchain, transactionPool) {
+        this.blockchain = blockchain;
         this.transactionPool = transactionPool;
         this.sockets = [];
     }
@@ -25,32 +25,33 @@ class p2pServer {
      * 
      */
     listen() {
-        const server = new webSocket.Server({ port: P2P_PORT });
+        const server = new Websocket.Server({ port: P2P_PORT });
         server.on('connection', socket => this.connectSocket(socket));
-        this.conectToPeers();
-        console.log(`escuchando peers conections en el puerto: ${P2P_PORT}`)
+        this.connectToPeers();
+        console.log(`Listening for peer-to-peer connections on: ${P2P_PORT}`);
     }
 
     /**
      * 
      */
-    conectToPeers() {
+    connectToPeers() {
         peers.forEach(peer => {
-            const socket = new webSocket(peer);
+            const socket = new Websocket(peer);
             socket.on('open', () => this.connectSocket(socket));
-        })
+        });
     }
 
     /**
      * 
-     * @param {soket} socket 
+     * @param {socket} socket 
      */
     connectSocket(socket) {
         this.sockets.push(socket);
-        console.log('[+] conection Soket');
+        console.log('Socket connected');
         this.messageHandler(socket);
         this.sendChain(socket);
     }
+
     /**
      * 
      * @param {soket} socket 
@@ -59,71 +60,66 @@ class p2pServer {
         socket.on('message', message => {
             const data = JSON.parse(message);
             switch (data.type) {
-                case MEESAGE_TYPES.chain:
-                    this.blockChain.replaceChain(data.chain)
+                case MESSAGE_TYPES.chain:
+                    this.blockchain.replaceChain(data.chain);
                     break;
-                case MEESAGE_TYPES.transaction:
-                    this.transactionPool.updateOrAddTransaction(data.transaction)
+                case MESSAGE_TYPES.transaction:
+                    this.transactionPool.updateOrAddTransaction(data.transaction);
                     break;
-                case MEESAGE_TYPES.clear_transactions:
-                    this.transactionPool.clear()
+                case MESSAGE_TYPES.clear_transactions:
+                    this.transactionPool.clear();
                     break;
                 default:
-                    console.log('Unknown message ')
+                    console.log('Unknown message');
             }
-        })
+        });
     }
 
     /**
      * 
-     * @param {soket} socket 
+     * @param {socket} socket 
      */
     sendChain(socket) {
         socket.send(JSON.stringify({
-            type: MEESAGE_TYPES.chain,
-            chain: this.blockChain.getChain()
-        }))
+            type: MESSAGE_TYPES.chain,
+            chain: this.blockchain.chain
+        }));
+    }
+
+    /**
+     * 
+     * @param {socket} socket 
+     * @param {transaction} transaction 
+     */
+    sendTransaction(socket, transaction) {
+        socket.send(JSON.stringify({
+            type: MESSAGE_TYPES.transaction,
+            transaction
+        }));
     }
 
     /**
      * 
      */
     syncChains() {
-        this.sockets.forEach(socket => {
-            this.sendChain(socket);
-        });
+        this.sockets.forEach(socket => this.sendChain(socket));
     }
 
     /**
      * 
-     * @param {soket} socket 
      * @param {transaction} transaction 
      */
-    sendTransaction(socket, transaction) {
-        socket.send(JSON.stringify({
-            type: MEESAGE_TYPES.transaction,
-            transaction
-        }))
-    }
-    /**
-     * 
-     * @param {transaction} transaction 
-     */
-    broadcastTrasnsaction(transaction) {
-        this.sockets.forEach(socket => {
-            this.sendTransaction(socket, transaction)
-        });
+    broadcastTransaction(transaction) {
+        this.sockets.forEach(socket => this.sendTransaction(socket, transaction));
     }
 
     /**
      * 
      */
-    broadcastClearTrasnsactions() {
-        this.sockets.forEach(socket => {
-            socket.send(JSON.stringify({
-                type: MEESAGE_TYPES.clear_transactions
-            }))
-        });
+    broadcastClearTransactions() {
+        this.sockets.forEach(socket => socket.send(JSON.stringify({
+            type: MESSAGE_TYPES.clear_transactions
+        })));
     }
 
     /**
@@ -132,10 +128,10 @@ class p2pServer {
      * @param {port} port 
      */
     addPeer(host, port) {
-        let connection = new webSocket(`ws://${host}:${port}`)
+        let connection = new Websocket(`ws://${host}:${port}`)
         connection.on('error', (error) => {
             console.log(error)
-        }) 
+        })
         connection.on('open', () => {
             //this.conectToPeers();
             this.connectSocket(connection)

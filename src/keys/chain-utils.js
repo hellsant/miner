@@ -28,7 +28,7 @@ class ChainUtil {
      * @param {data} data 
      */
     static hash(data) {
-        return SHA512(data).toString();
+        return SHA512(JSON.stringify(data)).toString();
         //let res = a.update(data)
         //return JSON.stringify(res)
     }

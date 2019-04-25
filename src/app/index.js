@@ -12,9 +12,9 @@ const Wallet = require('../wallet/index');
 const Miner = require('./miner');
 
 const app = express();
+const blockChain = new Blockchain();
 const wallet = new Wallet();
 const transactionPool = new TransactionPool();
-const blockChain = new Blockchain();
 const p2pServer = new P2pServer(blockChain, transactionPool);
 const miner = new Miner(blockChain, transactionPool, wallet, p2pServer);
 app.use(bodyParser.json());
@@ -45,7 +45,7 @@ app.get('/public-key', (req, res) => {
 app.post('/transact', (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, amount, blockChain, transactionPool);
-    p2pServer.broadcastTrasnsaction(transaction)
+    p2pServer.broadcastTransaction(transaction)
     res.redirect('/transactions')
 })
 

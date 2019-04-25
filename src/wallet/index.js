@@ -43,19 +43,19 @@ class Wallet {
      * @param {transactionPool} transactionPool 
      */
     createTransaction(recipient, amount, blockchain, transactionPool) {
-        this.balance = this.calculateBalance(blockchain)
+        this.balance = this.calculateBalance(blockchain);
         if (amount > this.balance) {
-            console.log(`amount exede el valance: ${amount} balance: ${this.balance}`)
+            console.log(`Amount: ${amount} exceceds current balance: ${this.balance}`);
             return;
         }
-        let transaction = transactionPool.existingTransaction(this.publicKey)
+        let transaction = transactionPool.existingTransaction(this.publicKey);
         if (transaction) {
-            transaction.update(this, recipient, amount)
+            transaction.update(this, recipient, amount);
         } else {
-            transaction = Transaction.newTransaction(this, recipient, amount)
-            transactionPool.updateOrAddTransaction(transaction)
+            transaction = Transaction.newTransaction(this, recipient, amount);
+            transactionPool.updateOrAddTransaction(transaction);
         }
-        return transaction
+        return transaction;
     }
 
     /**
@@ -65,7 +65,7 @@ class Wallet {
     calculateBalance(blockchain) {
         let balance = this.balance;
         let transactions = [];
-        blockchain.getChain().forEach(block => block.data.forEach(transaction => {
+        blockchain.chain.forEach(block => block.data.forEach(transaction => {
             transactions.push(transaction);
         }));
         const walletInputTs = transactions.filter(transaction => transaction.input.address === this.publicKey);

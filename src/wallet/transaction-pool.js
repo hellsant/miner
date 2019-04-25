@@ -6,7 +6,7 @@ const Transaction = require('./transaction');
  * 
  */
 class TransactionPool {
-    
+
     /**
      * 
      */
@@ -16,15 +16,14 @@ class TransactionPool {
 
     /**
      * 
-     * @param {transactions} transactions 
+     * @param {transaction} transaction 
      */
-    updateOrAddTransaction(transactions) {
-        let transactionWithId = this.transactions.find(t => t.id === transactions.id)
+    updateOrAddTransaction(transaction) {
+        let transactionWithId = this.transactions.find(t => t.id === transaction.id);
         if (transactionWithId) {
-            this.transactions[this.transactions.indexOf(transactionWithId)] = transactions
-
+            this.transactions[this.transactions.indexOf(transactionWithId)] = transaction;
         } else {
-            this.transactions.push(transactions)
+            this.transactions.push(transaction);
         }
     }
 
@@ -33,7 +32,7 @@ class TransactionPool {
      * @param {address} address 
      */
     existingTransaction(address) {
-        return this.transactions.find(t => t.input.address === address)
+        return this.transactions.find(t => t.input.address === address);
     }
 
     /**
@@ -42,25 +41,25 @@ class TransactionPool {
     validTransactions() {
         return this.transactions.filter(transaction => {
             const outputTotal = transaction.outputs.reduce((total, output) => {
-                return total + output.amount
-            }, 0)
+                return total + output.amount;
+            }, 0);
             if (transaction.input.amount !== outputTotal) {
-                console.log(`invalid transaction from: ${transaction.input.address}`)
-                return
+                console.log(`Invalid transaction from ${transaction.input.address}.`);
+                return;
             }
             if (!Transaction.verifyTransaction(transaction)) {
-                console.log(`invalid signature from: ${transaction.input.address}`)
-                return
+                console.log(`Invalid signature from ${transaction.input.address}.`);
+                return;
             }
-            return transaction
-        })
+            return transaction;
+        });
     }
 
     /**
      * 
      */
     clear() {
-        this.transactions = []
+        this.transactions = [];
     }
 }
 

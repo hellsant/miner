@@ -1,13 +1,15 @@
+/* eslint-disable global-require */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const app = express();
 const errorhandler = require('errorhandler');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const PORT = process.env.PORT || 4000;
+
+const app = express();
 
 // settings
 app.set('port', PORT);
@@ -31,8 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(require('./routes'))
 
 //errorhandlers
-if ('development' === process.env.NODE_ENV) {
-    app.use(errorhandler({log: errorNotification}))
+if (process.env.NODE_ENV === 'development') {
+    app.use(errorhandler({ log: errorNotification }))
 }
 
 //listenig server

@@ -48,7 +48,7 @@ router.get('/addBlock', (req, res) => {
 });
 router.post('/mine', (req, res) => {
     miner.mine();
-    res.redirect('/')
+    res.redirect('blockchain')
 });
 
 router.get('/mine', (req, res) => {
@@ -64,8 +64,9 @@ router.get('/transaction', (req, res) => {
     res.render('transaction', { tx: transactions })
 })
 router.get('/wallet', (req, res) => {
-    const transactions = transactionPool.existingTransaction(wallet.publicKey)
-    res.render('wallet', { tx: transactions })
+    //const transactions = transactionPool.existingTransaction(wallet.publicKey)
+    const balance = wallet.calculateBalance(blockChain);
+    res.render('wallet', { tx: wallet ,bal: balance })
 });
 
 router.get('/public-key', (req, res) => {

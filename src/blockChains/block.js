@@ -78,7 +78,7 @@ class Block {
    * @param {difficulty} difficulty 
    */
   static hasher(index, timestamp, lastHash, data, nonce, difficulty) {
-    return ChainUtil.hash(index + timestamp + lastHash + data + nonce + difficulty).toString();
+    return ChainUtil.hash(`${index}${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
   }
 
   /**
@@ -89,7 +89,7 @@ class Block {
     const { index, timestamp, lastHash, data, nonce, difficulty } = block;
     return Block.hasher(index, timestamp, lastHash, data, nonce, difficulty);
   }
-  
+
   /**
    * 
    */

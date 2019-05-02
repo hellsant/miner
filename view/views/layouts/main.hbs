@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">Wallet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -42,29 +42,39 @@
         </div>
     </nav>
     {{{ body }}}
-    <div class="container-fliud font-small indigo" id="about">
-        <div class="row bg-dark text-white p-2 text-center">
-            <div class="col-sm-2 p-2">
-                <i class="fab fa-btc fa-10x animated bounceIn"></i>
-            </div>
-            <div class="col-sm-10">
-                <h3>Bitcoin</h3>
-                <p>Bitcoin usa tecnología peer-to-peer o entre pares para operar sin una autoridad central o bancos; la
-                    gestión de las transacciones y la emisión de bitcoins es llevada a cabo de forma colectiva por la
-                    red.
-                    Bitcoin es de código abierto; su diseño es público, nadie es dueño o controla Bitcoin y todo el
-                    mundo
-                    puede participar. Por medio de sus muchas propiedades únicas, Bitcoin permite usos interesantes no
-                    contemplados por ningún sistema de pagos anterior.</p>
-            </div>
-        </div>
-    </div>
-
+    {{!-- <footer class="container">
+        <div class="col align-self-center">
+            <ul class="list-group list-group-horizontal list-group-flush">
+                <li class="list-group-item">
+                    <a href="/#index">About</a>&nbsp;&nbsp;
+                </li>
+                <li class="list-group-item">
+                    <a href="https://github.com/hellsant/miner"><i class="fab fa-github fa-2x"></i></a>&nbsp;&nbsp;
+                </li>
+                <li class="list-group-item">
+                    <a href="#"><i class="fab fa-linkedin fa-2x"></i></a>
+                </li>
+            </ul>
+    </footer> --}}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="/js/qrcode.min.js"></script>
+    <script type="text/javascript">
+        var qrcode = new QRCode(document.getElementById("canvas"), {
+            width: 256,
+            height: 256,
+            correctLevel: QRCode.CorrectLevel.H,
+            useSVG: true
+        });
+        function makeCode() {
+            qrcode.makeCode(document.getElementById("peer").value);
+        }
+        makeCode();
+    </script>
+
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <div class="container p-5">
     {{#each blocks}}
-    <div class="p-2">
+    <div class=" col align-self-center p-2">
         <div class="card-header bg-dark text-white text-center">
             <h5 class="card-title">Block {{ index }} <small class="text-muted"></small></h5>
         </div>
@@ -8,25 +8,25 @@
             <li class="list-group-item">
                 <span class="">Hash</span>
                 <br>
-                <div class="text-truncate" style="color:blue;">
+                <div class="text-truncate" style="color:rgba(34, 37, 240, 0.767);">
                     <small>{{ hash }}</small>
                 </div>
                 <br>
                 <span class="">Hash of previous block</span>
                 <br>
-                <div class="text-truncate" style="color:red;">
+                <div class="text-truncate" style="color:rgba(245, 43, 43, 0.815);">
                     <small>{{ lastHash }}</small>
                 </div>
             </li>
             <li class="list-group-item">
                 <span class="">Transaction</span><br>
+                {{#each data }}
                 <div class="text-truncate text-muted">
-                    <small style="color:teal;">
-                        {{#each data }}
+                    <small style="color:rgba(9, 107, 107, 0.932);">
                         {{id}}
-                        {{/each}}
                     </small>
                 </div>
+                {{/each}}
             </li>
             <li class="list-group-item">
                 <span class="">Nonce</span><br>

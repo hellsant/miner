@@ -14,9 +14,9 @@ class Blockchain {
    * @param {data} data 
    */
   addBlock(data) {
-    const block = Block.mineBlock(this.getLatestBlock(), data)
-    this.chain.push(block)
-    return block
+    const block = Block.mineBlock(this.getLatestBlock(), data);
+    this.chain.push(block);
+    return block;
   }
 
   /**

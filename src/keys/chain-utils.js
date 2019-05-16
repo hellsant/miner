@@ -10,14 +10,14 @@ const uuidV4 = require('uuid/v4');
  */
 class ChainUtil {
     /**
-     * 
+     * Generation of the peer corresponding to the public key
      */
     static getKeyPair() {
         return ec.genKeyPair()
     }
 
     /**
-     * 
+     * Generator of an ID V4
      */
     static id() {
         return uuidV4();
@@ -34,7 +34,7 @@ class ChainUtil {
     }
 
     /**
-     * 
+     * Validation of the signature of a transaction.
      * @param {publicKey} publicKey 
      * @param {signature} signature 
      * @param {dataHash} dataHash 

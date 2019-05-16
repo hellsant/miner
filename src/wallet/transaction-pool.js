@@ -36,7 +36,7 @@ class TransactionPool {
     }
 
     /**
-     * 
+     * The verification is done using the signature and the transaction
      */
     validTransactions() {
         return this.transactions.filter(transaction => {

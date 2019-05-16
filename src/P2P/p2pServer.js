@@ -22,7 +22,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Listened to pairs that must be added to the network
      */
     listen() {
         const server = new Websocket.Server({ port: P2P_PORT });
@@ -32,7 +32,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Connects the sockets to the p2p network
      */
     connectToPeers() {
         peers.forEach(peer => {
@@ -42,7 +42,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Add the sockets to the p2p network
      * @param {socket} socket 
      */
     connectSocket(socket) {

@@ -35,7 +35,8 @@ class Block {
   }
 
   /**
-   * 
+   * mined from a block, the difficulty is adjusted in addition to
+   * calculating the processing time thereof.
    * @param {lastBlock} lastBlock 
    * @param {data} data 
    */
@@ -59,7 +60,8 @@ class Block {
   }
 
   /**
-   * 
+   * adjust the difficulty according to the processing time 
+   * and the difficulty of the previous block.
    * @param {lastBlock} lastBlock 
    * @param {currentTime} currentTime 
    */

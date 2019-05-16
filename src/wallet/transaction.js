@@ -7,7 +7,7 @@ const { MINING_REWARD } = require('../config/config')
  */
 class Transaction {
     /**
-     *      
+     * Transaction contructor  
      */
     constructor() {
         this.id = ChainUtil.id();
@@ -88,7 +88,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * Verify that the signatures correspond to the transaction.
      * @param {transaction} transaction 
      */
     static verifyTransaction(transaction) {

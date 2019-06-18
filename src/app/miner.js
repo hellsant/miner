@@ -9,7 +9,10 @@ class Miner {
         this.wallet = wallet;
         this.p2pServer = p2pServer;
     }
-
+    /**
+     * Mine the block adding the corresponding transactions,
+     * synchronize all the blochchains of the other nodes in the network.
+     */
     mine() {
         const validTransactions = this.transactionPool.validTransactions();
         validTransactions.push(Transaction.rewardTransaction(this.wallet, Wallet.blockchainWallet()));

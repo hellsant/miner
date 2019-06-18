@@ -3,11 +3,11 @@
         <form action="/send" method="post">
             <div class="card animated flipInY">
                 <div class="card-header bg-dark text-white text-center">
-                    <h3>Send coins</h3>
+                    <h3>Realizar Transferencia</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="idPeer">Tu Id waller:</label>
+                        <label for="idPeer">Tu Id walled:</label>
                         <div class="input-group">
                             <input type="text" id="peer" name="idPeer" class="form-control" value="{{ publicKey }}"
                                 placeholder='{{ publicKey }}' disabled>
@@ -20,16 +20,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="recipient">To:</label>
-                        <input type="text" name="recipient" class="form-control" placeholder="enter address to send"
+                        <label for="recipient">A:</label>
+                        <input type="text" name="recipient" class="form-control" placeholder="Direccion de envio"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="amount" class="col-form-label">Enter Amount:</label>
-                        <input type="number" name="amount" class="form-control" placeholder="amount to send" required>
+                        <label for="amount" class="col-form-label">Cantidad:</label>
+                        <input type="number" name="amount" class="form-control" placeholder="Monto" required>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary btn-block">Continue</button>
+                        <button class="btn btn-primary btn-block">Continuar</button>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Qr code for wallet</h4>
+                    <h4 class="modal-title">Qr de la wallet</h4>
                 </div>
                 <div class="modal-body">
                     <center>
@@ -48,7 +48,7 @@
                     </center>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
                 </div>
             </div>
         </div>

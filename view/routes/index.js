@@ -14,6 +14,7 @@ const p2pServer = new P2pServer(blockChain, transactionPool);
 const miner = new Miner(blockChain, transactionPool, wallet, p2pServer);
 const router = express.Router();
 
+p2pServer.listen();
 
 router.get('/', (req, res) => {
     res.render('index')

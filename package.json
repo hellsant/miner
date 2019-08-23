@@ -12,8 +12,8 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["blockChain", "miner", "sha-3"],
+  "author": "Douglas Suarez Agreda",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.16.0",

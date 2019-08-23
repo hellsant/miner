@@ -1,14 +1,25 @@
 /* eslint-disable no-undef */
 const Transaction = require('../wallet/transaction')
 const Wallet = require('../wallet/index')
-
+/**
+ * 
+ */
 class Miner {
+
+    /**
+     * Constructore of Mioner class
+     * @param {blockchain} blockchain 
+     * @param {transaccionpool} transactionPool 
+     * @param {wallet} wallet 
+     * @param {p2pServer} p2pServer 
+     */
     constructor(blockchain, transactionPool, wallet, p2pServer) {
         this.blockchain = blockchain;
         this.transactionPool = transactionPool;
         this.wallet = wallet;
         this.p2pServer = p2pServer;
     }
+
     /**
      * Mine the block adding the corresponding transactions,
      * synchronize all the blochchains of the other nodes in the network.

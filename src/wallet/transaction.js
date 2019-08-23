@@ -6,6 +6,7 @@ const { MINING_REWARD } = require('../config/config')
  * 
  */
 class Transaction {
+
     /**
      * Transaction contructor  
      */
@@ -16,7 +17,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * The transaction is updated with, the parameters of who is sent to who receives and the amount of money.
      * @param {senserWallet} senderWallet 
      * @param {recipient} recipient 
      * @param {amount} amount 
@@ -34,7 +35,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * Create a transaction to whom you will send and the amount to be sent.
      * @param {senderWallet} senderWallet 
      * @param {outputs} outputs 
      */
@@ -46,7 +47,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * Create a transaction that shows who the amount will be sent to and who sends it.
      * @param {senderWallet} senderWallet 
      * @param {recipient} recipient 
      * @param {amount} amount 
@@ -63,7 +64,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * Grants a reward for the user for solving the mining.
      * @param {minerWallet} minerWallet 
      * @param {blockchainWallet} blockchainWallet 
      */
@@ -74,7 +75,7 @@ class Transaction {
     }
 
     /**
-     * 
+     * Create the signature for a transaction
      * @param {transaction} transaction 
      * @param {senserWallet} senderWallet 
      */

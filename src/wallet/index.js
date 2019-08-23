@@ -9,7 +9,7 @@ const Transaction = require('./transaction')
 class Wallet {
 
     /**
-     * 
+     * Constructor of wallet class
      */
     constructor() {
         this.balance = INITIAL_BALANCE;
@@ -18,18 +18,7 @@ class Wallet {
     }
 
     /**
-     * 
-     */
-    toString() {
-        return `
-        wallet
-        publicKey:    ${this.publicKey.toString()}
-        balance:      ${this.balance}
-        `
-    }
-
-    /**
-     * 
+     * Sing of wallet
      * @param {dataHash} dataHash 
      */
     sign(dataHash) {
@@ -37,7 +26,7 @@ class Wallet {
     }
 
     /**
-     * 
+     * Create a new Transaccion.
      * @param {recipient} recipient 
      * @param {amount} amount 
      * @param {transactionPool} transactionPool 
@@ -59,7 +48,7 @@ class Wallet {
     }
 
     /**
-     * 
+     * Calculate the user balance of the transactions made.
      * @param {blockchain} blockchain 
      */
     calculateBalance(blockchain) {
@@ -94,12 +83,23 @@ class Wallet {
     }
 
     /**
-     * 
+     * Create a blockchain for the wallet.
      */
     static blockchainWallet() {
         const blockchainWallet = new this();
         blockchainWallet.address = 'Coinbase-0000xxx'
         return blockchainWallet
+    }
+
+    /**
+     * 
+     */
+    toString() {
+        return `
+        wallet
+        publicKey:    ${this.publicKey.toString()}
+        balance:      ${this.balance}
+        `
     }
 }
 module.exports = Wallet;

@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-// //const sha3_512 = require('sha3').SHA3;
-// //const a = new sha3_512(512)
 const SHA512 = require('crypto-js/sha3');
 const uuidV4 = require('uuid/v4');
+
 /**
  * 
  */
 class ChainUtil {
+    
     /**
      * Generation of the peer corresponding to the public key
      */
@@ -24,13 +24,11 @@ class ChainUtil {
     }
 
     /**
-     * 
+     * Returns a string with the hash sha512
      * @param {data} data 
      */
     static hash(data) {
         return SHA512(JSON.stringify(data)).toString();
-        //let res = a.update(data)
-        //return JSON.stringify(res)
     }
 
     /**

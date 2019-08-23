@@ -10,8 +10,9 @@ const MESSAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transa
  * 
  */
 class p2pServer {
+
     /**
-     * 
+     * Constructor of p2pServer Class
      * @param {blockChain} blockChain 
      * @param {transactionPool} transactionPool 
      */
@@ -53,7 +54,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Get the messages from the socket and handle them according to their type.
      * @param {soket} socket 
      */
     messageHandler(socket) {
@@ -76,7 +77,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Send a chain to the network.
      * @param {socket} socket 
      */
     sendChain(socket) {
@@ -87,7 +88,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Send a transaction to the network.
      * @param {socket} socket 
      * @param {transaction} transaction 
      */
@@ -99,14 +100,14 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Synchronize blockchain chains.
      */
     syncChains() {
         this.sockets.forEach(socket => this.sendChain(socket));
     }
 
     /**
-     * 
+     * Notifies all network nodes that a transaction exists.
      * @param {transaction} transaction 
      */
     broadcastTransaction(transaction) {
@@ -114,7 +115,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Send a message that transactions are being cleaned.
      */
     broadcastClearTransactions() {
         this.sockets.forEach(socket => socket.send(JSON.stringify({
@@ -123,7 +124,7 @@ class p2pServer {
     }
 
     /**
-     * 
+     * Add peer to p2p 
      * @param {host} host 
      * @param {port} port 
      */
@@ -138,11 +139,18 @@ class p2pServer {
         })
     }
 
+    /**
+     * Close the connection 
+     * @param {connection} connection 
+     */
     closeConnection(connection) {
         console.log('closing connection')
         this.sockets.splice(this.sockets.indexOf(connection), 1)
     }
 
+    /**
+     * Get P2p port
+     */
     getP2Pport() {
         return P2P_PORT
     }

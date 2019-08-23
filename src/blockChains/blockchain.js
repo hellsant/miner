@@ -5,12 +5,16 @@ const Block = require("./block");
  * 
  */
 class Blockchain {
+
+  /**
+   * Constructor of BlockChain Class
+   */
   constructor() {
     this.chain = [Block.genesis()];
   }
 
   /**
-   * 
+   * Add a new block to the blockchain
    * @param {data} data 
    */
   addBlock(data) {

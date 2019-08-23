@@ -8,14 +8,14 @@ const Transaction = require('./transaction');
 class TransactionPool {
 
     /**
-     * 
+     * Constructor of Transaction Pool
      */
     constructor() {
         this.transactions = [];
     }
 
     /**
-     * 
+     * Update or add transaction for the blockchain.
      * @param {transaction} transaction 
      */
     updateOrAddTransaction(transaction) {
@@ -28,7 +28,7 @@ class TransactionPool {
     }
 
     /**
-     * 
+     * Returns a existing transaccion.
      * @param {address} address 
      */
     existingTransaction(address) {
@@ -56,7 +56,7 @@ class TransactionPool {
     }
 
     /**
-     * 
+     * clear all transactions.
      */
     clear() {
         this.transactions = [];

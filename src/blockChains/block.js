@@ -7,7 +7,7 @@ const { DIFFICULTY, MINE_RATE } = require('../config/config')
 class Block {
 
   /**
-   * 
+   * Block class constructor
    * @param {timestamp} timestamp 
    * @param {lasHash} lastHash 
    * @param {hash} hash 
@@ -72,7 +72,7 @@ class Block {
   }
 
   /**
-   * 
+   * Returns a hash string
    * @param {timestamp} timestamp 
    * @param {lasHash} lastHash 
    * @param {data} data 
@@ -84,7 +84,7 @@ class Block {
   }
 
   /**
-   * 
+   * Create a hash for the block
    * @param {block} block 
    */
   static blockHash(block) {

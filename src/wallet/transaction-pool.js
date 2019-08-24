@@ -3,12 +3,14 @@
 const Transaction = require('./transaction');
 
 /**
- * 
+ * It creates a pool of transactions which will be handled by the wallet for mined later.
+ * @class TransactionPool
  */
 class TransactionPool {
 
     /**
-     * Constructor of Transaction Pool
+     *Creates an instance of TransactionPool.
+     * @memberof TransactionPool
      */
     constructor() {
         this.transactions = [];
@@ -16,7 +18,8 @@ class TransactionPool {
 
     /**
      * Update or add transaction for the blockchain.
-     * @param {transaction} transaction 
+     * @param {Transaction} transaction transaction
+     * @memberof TransactionPool
      */
     updateOrAddTransaction(transaction) {
         let transactionWithId = this.transactions.find(t => t.id === transaction.id);
@@ -29,7 +32,9 @@ class TransactionPool {
 
     /**
      * Returns a existing transaccion.
-     * @param {address} address 
+     * @param {string} address address to send a transaction
+     * @returns {boolean} true if a address exist in other case terun false
+     * @memberof TransactionPool
      */
     existingTransaction(address) {
         return this.transactions.find(t => t.input.address === address);
@@ -37,6 +42,8 @@ class TransactionPool {
 
     /**
      * The verification is done using the signature and the transaction
+     * @returns transaction or send a message acording a error
+     * @memberof TransactionPool
      */
     validTransactions() {
         return this.transactions.filter(transaction => {
@@ -57,10 +64,15 @@ class TransactionPool {
 
     /**
      * clear all transactions.
+     * @memberof TransactionPool
      */
     clear() {
         this.transactions = [];
     }
 }
 
+/** 
+ * It creates a pool of transactions which will be handled by the wallet for mined later.
+ * @exports TransactionPool
+ */
 module.exports = TransactionPool;

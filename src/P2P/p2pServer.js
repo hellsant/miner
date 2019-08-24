@@ -7,14 +7,17 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const MESSAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
 
 /**
- * 
+ * It allows to raise a P2P server in addition to adding new nodes to the network.
+ *
+ * @class p2pServer
  */
 class p2pServer {
 
     /**
-     * Constructor of p2pServer Class
-     * @param {blockChain} blockChain 
-     * @param {transactionPool} transactionPool 
+     * Creates an instance of p2pServer.
+     * @param {Blockchain} blockChain blockchain
+     * @param {TransactionPool} transactionPool Pool of transactions 
+     * @memberof p2pServer
      */
     constructor(blockchain, transactionPool) {
         this.blockchain = blockchain;
@@ -24,6 +27,7 @@ class p2pServer {
 
     /**
      * Listened to pairs that must be added to the network
+     * @memberof p2pServer
      */
     listen() {
         const server = new Websocket.Server({ port: P2P_PORT });
@@ -33,7 +37,8 @@ class p2pServer {
     }
 
     /**
-     * Connects the sockets to the p2p network
+     * Connects the sockets to the p2p network.
+     * @memberof p2pServer
      */
     connectToPeers() {
         peers.forEach(peer => {
@@ -44,7 +49,8 @@ class p2pServer {
 
     /**
      * Add the sockets to the p2p network
-     * @param {socket} socket 
+     * @param {socket} socket sokect
+     * @memberof p2pServer
      */
     connectSocket(socket) {
         this.sockets.push(socket);
@@ -55,7 +61,8 @@ class p2pServer {
 
     /**
      * Get the messages from the socket and handle them according to their type.
-     * @param {soket} socket 
+     * @param {soket} socket socket
+     * @memberof p2pServer
      */
     messageHandler(socket) {
         socket.on('message', message => {
@@ -78,7 +85,8 @@ class p2pServer {
 
     /**
      * Send a chain to the network.
-     * @param {socket} socket 
+     * @param {socket} socket socket
+     * @memberof p2pServer
      */
     sendChain(socket) {
         socket.send(JSON.stringify({
@@ -89,8 +97,9 @@ class p2pServer {
 
     /**
      * Send a transaction to the network.
-     * @param {socket} socket 
-     * @param {transaction} transaction 
+     * @param {socket} socket sokect 
+     * @param {Transaction} transaction A transaction to send
+     * @memberof p2pServer
      */
     sendTransaction(socket, transaction) {
         socket.send(JSON.stringify({
@@ -101,6 +110,7 @@ class p2pServer {
 
     /**
      * Synchronize blockchain chains.
+     * @memberof p2pServer
      */
     syncChains() {
         this.sockets.forEach(socket => this.sendChain(socket));
@@ -108,7 +118,8 @@ class p2pServer {
 
     /**
      * Notifies all network nodes that a transaction exists.
-     * @param {transaction} transaction 
+     * @param {Transaction} transaction a transaction to broadcast in a blockchain
+     * @memberof p2pServer
      */
     broadcastTransaction(transaction) {
         this.sockets.forEach(socket => this.sendTransaction(socket, transaction));
@@ -116,6 +127,7 @@ class p2pServer {
 
     /**
      * Send a message that transactions are being cleaned.
+     * @memberof p2pServer
      */
     broadcastClearTransactions() {
         this.sockets.forEach(socket => socket.send(JSON.stringify({
@@ -125,8 +137,9 @@ class p2pServer {
 
     /**
      * Add peer to p2p 
-     * @param {host} host 
-     * @param {port} port 
+     * @param {host} host url or ip 
+     * @param {port} port port 
+     * @memberof p2pServer
      */
     addPeer(host, port) {
         let connection = new Websocket(`ws://${host}:${port}`)
@@ -141,7 +154,8 @@ class p2pServer {
 
     /**
      * Close the connection 
-     * @param {connection} connection 
+     * @param {connection} connection the current node connection
+     * @memberof p2pServer
      */
     closeConnection(connection) {
         console.log('closing connection')
@@ -150,10 +164,15 @@ class p2pServer {
 
     /**
      * Get P2p port
+     * @returns a port 
+     * @memberof p2pServer
      */
     getP2Pport() {
         return P2P_PORT
     }
 }
-
+/**
+ * It allows to raise a P2P server in addition to adding new nodes to the network.
+ * @exports p2pServer 
+ */
 module.exports = p2pServer;

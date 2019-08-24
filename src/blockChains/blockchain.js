@@ -1,13 +1,18 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 const Block = require("./block");
+
 /**
- * 
+ * Responsible for managing the blockchain which will be managed in the P2P network
+ *
+ * @class Blockchain
  */
 class Blockchain {
 
+ 
   /**
-   * Constructor of BlockChain Class
+   * Creates an instance of Blockchain.
+   * @memberof Blockchain
    */
   constructor() {
     this.chain = [Block.genesis()];
@@ -15,7 +20,9 @@ class Blockchain {
 
   /**
    * Add a new block to the blockchain
-   * @param {data} data 
+   * @param {object} data contains the transaccions into a block
+   * @returns the new block in a blockchains beffore added.
+   * @memberof Blockchain
    */
   addBlock(data) {
     const block = Block.mineBlock(this.getLatestBlock(), data);
@@ -27,7 +34,8 @@ class Blockchain {
    * Returns the latest block on our chain. Useful when you want to create a
    * new Block and you need the hash of the previous Block.
    *
-   * @returns {Block[]}
+   * @returns {Block[]} the las block of the blockchain
+   * @memberof Blockchain
    */
   getLatestBlock() {
     return this.chain[this.chain.length - 1];
@@ -38,7 +46,9 @@ class Blockchain {
    * linked together and nobody has tampered with the hashes. By checking
    * the blocks it also verifies the (signed) transactions inside of them.
    *
-   * @returns {boolean}
+   * @param {Blockchain} chain recibe a blockchain to validate
+   * @returns {boolean} true if the block is valid else retun false
+   * @memberof Blockchain
    */
   isValidChain(chain) {
     if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
@@ -57,7 +67,9 @@ class Blockchain {
 
   /**
    * Replace the blockchain for a new one
-   * @param newChain
+   * @param {Blockchain} newChain current blockchain that will be replaced by a new one.
+   * @returns a new chain replaced
+   * @memberof Blockchain
    */
   replaceChain(newChain) {
     if (newChain.length <= this.chain.length) {
@@ -74,11 +86,15 @@ class Blockchain {
 
   /**
    * Returns the whole blockchain
-   * @return {Array<BrewBlock>}
+   * @return {Array<Block>} the blockchain
+   * @memberof Blockchain
    */
   getChain() {
     return this.chain
   }
 }
-
+/** 
+ * Responsible for managing the blockchain which will be managed in the P2P network
+ * @exports Blockchain
+ */
 module.exports = Blockchain;

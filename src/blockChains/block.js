@@ -1,20 +1,25 @@
 /* eslint-disable no-undef */
 const ChainUtil = require('../keys/chain-utils')
 const { DIFFICULTY, MINE_RATE } = require('../config/config')
+
 /**
- * 
+ *
+ * The block is the container of the transactions made that will be added to the blockchain
+ * @class Block
  */
 class Block {
 
   /**
-   * Block class constructor
-   * @param {timestamp} timestamp 
-   * @param {lasHash} lastHash 
-   * @param {hash} hash 
-   * @param {data} data 
-   * @param {nonce} nonce 
-   * @param {diffiulty} difficulty 
-   * @param {processTime} processTime 
+   * Creates an instance of Block.
+   * @param {number} index index of block
+   * @param {timestamp} timestamp records the time the block was created
+   * @param {hash} lastHash Hash of last block
+   * @param {hash} hash Hash Actual for the block
+   * @param {object} data Transasctions to add in a block
+   * @param {number} nonce Amount of zeros added to the block so the hash will be resolved
+   * @param {number} difficulty Difficulty of mine a block 
+   * @param {timestamp} processTime time to create a block 
+   * @memberof Block
    */
   constructor(index, timestamp, lastHash, hash, data, nonce, difficulty, processTime) {
     this.index = index;
@@ -29,6 +34,9 @@ class Block {
 
   /**
    * Method that initializes the genesis node of the blockchain.
+   * @static
+   * @returns the first node or node genesis.
+   * @memberof Block
    */
   static genesis() {
     return new this(0, Date.parse('2019-01-01'), '0'.repeat(64), '0'.repeat(64), [], 0, DIFFICULTY, 0);
@@ -37,8 +45,11 @@ class Block {
   /**
    * mined from a block, the difficulty is adjusted in addition to
    * calculating the processing time thereof.
-   * @param {lastBlock} lastBlock 
-   * @param {data} data 
+   * @param {Block} lastBlock previous blockchain block
+   * @param {object} data transactions that will be added to the current block.
+   * @static
+   * @returns a block with its corresponding hash.
+   * @memberof Block
    */
   static mineBlock(lastBlock, data) {
     const t1 = Date.now()
@@ -62,8 +73,11 @@ class Block {
   /**
    * adjust the difficulty according to the processing time 
    * and the difficulty of the previous block.
-   * @param {lastBlock} lastBlock 
-   * @param {currentTime} currentTime 
+   * @param {Block} lastBlock previous blockchain block
+   * @param {timestamp} currentTime current time for mining
+   * @static
+   * @returns the new difficulty for the mining of the next block.
+   * @memberof Block
    */
   static adjustDifficulty(lastBlock, currentTime) {
     let { difficulty } = lastBlock
@@ -72,28 +86,39 @@ class Block {
   }
 
   /**
-   * Returns a hash string
-   * @param {timestamp} timestamp 
-   * @param {lasHash} lastHash 
-   * @param {data} data 
-   * @param {nonce} nonce 
-   * @param {difficulty} difficulty 
+   * create a hash for the current block
+   * @static
+   * @param {number} index index of block
+   * @param {timestamp} timestamp records the time the block was created
+   * @param {hash} lastHash Hash of last block
+   * @param {object} data Transasctions to add in a block
+   * @param {number} nonce Amount of zeros added to the block so the hash will be resolved
+   * @param {number} difficulty Difficulty of mine a block 
+   * @returns a block with a hash
+   * @memberof Block
    */
   static hasher(index, timestamp, lastHash, data, nonce, difficulty) {
     return ChainUtil.hash(`${index}${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
   }
 
   /**
-   * Create a hash for the block
-   * @param {block} block 
+   * Create a hash for the block.
+   * @param {Block} block the block that will be hashed
+   * @static
+   * @returns a block already hashed.
+   * @memberof Block
    */
   static blockHash(block) {
     const { index, timestamp, lastHash, data, nonce, difficulty } = block;
     return Block.hasher(index, timestamp, lastHash, data, nonce, difficulty);
   }
 
+
   /**
-   * 
+   *create a string with the block information
+   *
+   * @returns the content of a block in the form of a string
+   * @memberof Block
    */
   toString() {
     return `Block -
@@ -107,5 +132,8 @@ class Block {
       ProsessTime: ${this.processTime}`;
   }
 }
-
+/**
+ * The block is the container of the transactions made that will be added to the blockchain
+ * @exports Block
+ */
 module.exports = Block;

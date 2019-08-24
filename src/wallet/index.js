@@ -4,12 +4,16 @@ const { INITIAL_BALANCE } = require('../config/config')
 const ChainUtil = require('../keys/chain-utils')
 const Transaction = require('./transaction')
 /**
- * 
+ * The user's wallet for transaction handling.
+ *
+ * @class Wallet
  */
 class Wallet {
 
+   
     /**
-     * Constructor of wallet class
+     *Creates an instance of Wallet.
+     * @memberof Wallet
      */
     constructor() {
         this.balance = INITIAL_BALANCE;
@@ -18,8 +22,10 @@ class Wallet {
     }
 
     /**
-     * Sing of wallet
-     * @param {dataHash} dataHash 
+     * Sign of wallet
+     * @param {hash} dataHash private key of the user
+     * @returns sign 
+     * @memberof Wallet
      */
     sign(dataHash) {
         return this.keyPair.sign(dataHash)
@@ -27,9 +33,12 @@ class Wallet {
 
     /**
      * Create a new Transaccion.
-     * @param {recipient} recipient 
-     * @param {amount} amount 
-     * @param {transactionPool} transactionPool 
+     * @param {string} recipient User who will receive the transaction
+     * @param {number} amount Amount to be sent
+     * @param {Blockchain} blockchain Current blockchain
+     * @param {TransactionPool} transactionPool Hold transactions
+     * @returns transaccion
+     * @memberof Wallet
      */
     createTransaction(recipient, amount, blockchain, transactionPool) {
         this.balance = this.calculateBalance(blockchain);
@@ -49,7 +58,9 @@ class Wallet {
 
     /**
      * Calculate the user balance of the transactions made.
-     * @param {blockchain} blockchain 
+     * @param {Blockchain} blockchain blockchain on p2p network.
+     * @returns
+     * @memberof Wallet
      */
     calculateBalance(blockchain) {
         let balance = this.balance;
@@ -84,6 +95,9 @@ class Wallet {
 
     /**
      * Create a blockchain for the wallet.
+     * @static
+     * @returns blockchain wallet
+     * @memberof Wallet
      */
     static blockchainWallet() {
         const blockchainWallet = new this();
@@ -92,7 +106,9 @@ class Wallet {
     }
 
     /**
-     * 
+     * create a wallet information in a string form.
+     * @returns a string of a wallet
+     * @memberof Wallet
      */
     toString() {
         return `
@@ -102,4 +118,8 @@ class Wallet {
         `
     }
 }
+/** 
+ * The user's wallet for transaction handling.
+ * @exports Wallet 
+ */
 module.exports = Wallet;

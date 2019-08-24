@@ -5,12 +5,17 @@ const SHA512 = require('crypto-js/sha3');
 const uuidV4 = require('uuid/v4');
 
 /**
- * 
+ * Responsible for managing the security of the system.
+ *
+ * @class ChainUtil
  */
 class ChainUtil {
-    
+
     /**
      * Generation of the peer corresponding to the public key
+     * @static
+     * @returns the pair is correct
+     * @memberof ChainUtil
      */
     static getKeyPair() {
         return ec.genKeyPair()
@@ -18,14 +23,20 @@ class ChainUtil {
 
     /**
      * Generator of an ID V4
+     * @static
+     * @returns An id of V4
+     * @memberof ChainUtil
      */
     static id() {
         return uuidV4();
     }
 
     /**
-     * Returns a string with the hash sha512
-     * @param {data} data 
+     * Create the hash 512 for the received parameter
+     * @param {object} data information that will be hashed
+     * @static
+     * @returns  a string with the hash sha512
+     * @memberof ChainUtil
      */
     static hash(data) {
         return SHA512(JSON.stringify(data)).toString();
@@ -33,9 +44,12 @@ class ChainUtil {
 
     /**
      * Validation of the signature of a transaction.
-     * @param {publicKey} publicKey 
-     * @param {signature} signature 
-     * @param {dataHash} dataHash 
+     * @param {string} publicKey public key to send a transaction
+     * @param {string} signature signatue of address to send a transaction
+     * @param {hash} dataHash transaction hash
+     * @static
+     * @returns {boolean} true if signature are correct else retunrs false
+     * @memberof ChainUtil
      */
     static verifySignature(publicKey, signature, dataHash) {
         return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature)
@@ -43,4 +57,8 @@ class ChainUtil {
 
 }
 
+/**
+ * Responsible for managing the security of the system.
+ * @exports ChainUtil
+ */
 module.exports = ChainUtil;

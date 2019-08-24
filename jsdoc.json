@@ -1,0 +1,20 @@
+{
+    "source":{
+        "include":["./src/app","./src/blockChains","./src/config","./src/keys","./src/P2P","./src/wallet"],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    
+    
+    "plugins":[
+        "pluguins/markdown"
+    ],
+    "opts": {
+        "encoding":"utf8",
+        "readme":"./readme.md",
+        "destination":"Docs/",
+        "resource":true,
+        "verbose":true,
+        "template":"node_modules/better-docs/"
+    }
+}

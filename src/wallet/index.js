@@ -37,7 +37,7 @@ class Wallet {
      * @param {number} amount Amount to be sent
      * @param {Blockchain} blockchain Current blockchain
      * @param {TransactionPool} transactionPool Hold transactions
-     * @returns transaccion
+     * @returns Transaction
      * @memberof Wallet
      */
     createTransaction(recipient, amount, blockchain, transactionPool) {
@@ -59,7 +59,7 @@ class Wallet {
     /**
      * Calculate the user balance of the transactions made.
      * @param {Blockchain} blockchain blockchain on p2p network.
-     * @returns
+     * @returns Number
      * @memberof Wallet
      */
     calculateBalance(blockchain) {
@@ -96,7 +96,7 @@ class Wallet {
     /**
      * Create a blockchain for the wallet.
      * @static
-     * @returns blockchain wallet
+     * @returns Blockchain wallet | Coinbase
      * @memberof Wallet
      */
     static blockchainWallet() {
@@ -107,7 +107,7 @@ class Wallet {
 
     /**
      * create a wallet information in a string form.
-     * @returns a string of a wallet
+     * @returns A string of a wallet | String
      * @memberof Wallet
      */
     toString() {

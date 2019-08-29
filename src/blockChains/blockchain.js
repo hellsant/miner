@@ -21,7 +21,7 @@ class Blockchain {
   /**
    * Add a new block to the blockchain
    * @param {object} data contains the transaccions into a block
-   * @returns the new block in a blockchains beffore added.
+   * @returns the new block in a blockchains beffore added. | Block
    * @memberof Blockchain
    */
   addBlock(data) {
@@ -34,7 +34,7 @@ class Blockchain {
    * Returns the latest block on our chain. Useful when you want to create a
    * new Block and you need the hash of the previous Block.
    *
-   * @returns {Block[]} the las block of the blockchain
+   * @returns {Block[]} the last block of the blockchain | Array
    * @memberof Blockchain
    */
   getLatestBlock() {
@@ -47,7 +47,7 @@ class Blockchain {
    * the blocks it also verifies the (signed) transactions inside of them.
    *
    * @param {Blockchain} chain recibe a blockchain to validate
-   * @returns {boolean} true if the block is valid else retun false
+   * @returns {boolean} true if the block is valid else retun false | Boolean
    * @memberof Blockchain
    */
   isValidChain(chain) {
@@ -68,7 +68,7 @@ class Blockchain {
   /**
    * Replace the blockchain for a new one
    * @param {Blockchain} newChain current blockchain that will be replaced by a new one.
-   * @returns a new chain replaced
+   * @returns a new chain replaced | new Array
    * @memberof Blockchain
    */
   replaceChain(newChain) {
@@ -86,7 +86,7 @@ class Blockchain {
 
   /**
    * Returns the whole blockchain
-   * @return {Array<Block>} the blockchain
+   * @return {Array<Block>} the blockchain | array
    * @memberof Blockchain
    */
   getChain() {

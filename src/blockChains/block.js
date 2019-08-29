@@ -35,7 +35,7 @@ class Block {
   /**
    * Method that initializes the genesis node of the blockchain.
    * @static
-   * @returns the first node or node genesis.
+   * @returns the first node or node genesis. | Block
    * @memberof Block
    */
   static genesis() {
@@ -48,7 +48,7 @@ class Block {
    * @param {Block} lastBlock previous blockchain block
    * @param {object} data transactions that will be added to the current block.
    * @static
-   * @returns a block with its corresponding hash.
+   * @returns A block with its corresponding hash. | Block hashed
    * @memberof Block
    */
   static mineBlock(lastBlock, data) {
@@ -64,7 +64,7 @@ class Block {
       timestamp = Date.now()
       difficulty = Block.adjustDifficulty(lastBlock, timestamp)
       hash = Block.hasher(newIndex, timestamp, lastHash, data, nonce, difficulty)
-    } while (hash.substring(0, difficulty) !== Array(difficulty + 1).join('0'))
+    } while (hash.substring(0, difficulty) !== '0'.repeat(difficulty))
     const t2 = Date.now()
     const processTime = t2 - t1
     return new this(newIndex, timestamp, lastHash, hash, data, nonce, difficulty, processTime)
@@ -76,7 +76,7 @@ class Block {
    * @param {Block} lastBlock previous blockchain block
    * @param {timestamp} currentTime current time for mining
    * @static
-   * @returns the new difficulty for the mining of the next block.
+   * @returns the new difficulty for the mining of the next block. | Number
    * @memberof Block
    */
   static adjustDifficulty(lastBlock, currentTime) {
@@ -94,7 +94,7 @@ class Block {
    * @param {object} data Transasctions to add in a block
    * @param {number} nonce Amount of zeros added to the block so the hash will be resolved
    * @param {number} difficulty Difficulty of mine a block 
-   * @returns a block with a hash
+   * @returns A block with a hash | String Hash
    * @memberof Block
    */
   static hasher(index, timestamp, lastHash, data, nonce, difficulty) {
@@ -105,7 +105,7 @@ class Block {
    * Create a hash for the block.
    * @param {Block} block the block that will be hashed
    * @static
-   * @returns a block already hashed.
+   * @returns A block already hashed. | Hash
    * @memberof Block
    */
   static blockHash(block) {

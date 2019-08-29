@@ -33,7 +33,7 @@ class TransactionPool {
     /**
      * Returns a existing transaccion.
      * @param {string} address address to send a transaction
-     * @returns {boolean} true if a address exist in other case terun false
+     * @returns {boolean} True if a address exist in other case terun false | Boolean
      * @memberof TransactionPool
      */
     existingTransaction(address) {
@@ -42,13 +42,13 @@ class TransactionPool {
 
     /**
      * The verification is done using the signature and the transaction
-     * @returns transaction or send a message acording a error
+     * @returns Transaction or send a message acording a error | Transaction
      * @memberof TransactionPool
      */
     validTransactions() {
         return this.transactions.filter(transaction => {
             const outputTotal = transaction.outputs.reduce((total, output) => {
-                return total + output.amount;
+                return total + parseFloat(output.amount);
             }, 0);
             if (transaction.input.amount !== outputTotal) {
                 console.log(`Invalid transaction from ${transaction.input.address}.`);

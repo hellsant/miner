@@ -164,7 +164,7 @@ class p2pServer {
 
     /**
      * Get P2p port
-     * @returns a port 
+     * @returns String | Number 
      * @memberof p2pServer
      */
     getP2Pport() {

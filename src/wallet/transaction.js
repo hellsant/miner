@@ -25,7 +25,7 @@ class Transaction {
      * @param {Wallet} senderWallet wallet to send a transaction
      * @param {string} recipient public key of a wallet to recive a transaction.
      * @param {number} amount amounto to send
-     * @returns transaction
+     * @returns Transaction
      * @memberof Transaction
      */
     update(senderWallet, recipient, amount) {
@@ -45,7 +45,7 @@ class Transaction {
      * @param {Wallet} senderWallet wallet to send a transaction
      * @param {object} outputs amount to send
      * @static
-     * @returns transaction
+     * @returns Transaction
      * @memberof Transaction
      */
     static transactionWithOutputs(senderWallet, outputs) {
@@ -61,7 +61,7 @@ class Transaction {
      * @param {string} recipient public key of a wallet to recive a transaction.
      * @param {number} amount amounto to send
      * @static
-     * @returns
+     * @returns Transaction
      * @memberof Transaction
      */
     static newTransaction(senderWallet, recipient, amount) {
@@ -80,7 +80,7 @@ class Transaction {
      * @param {Wallet} minerWallet wallet to send  reward of a transaction
      * @param {Wallet} blockchainWallet blockchain to inchude a wallet
      * @static
-     * @returns
+     * @returns Transaction
      * @memberof Transaction
      */
     static rewardTransaction(minerWallet, blockchainWallet) {
@@ -109,7 +109,7 @@ class Transaction {
      * Verify that the signatures correspond to the transaction.
      * @param {Transaction} transaction transaction to verify
      * @static
-     * @returns {boolean} true is a signature oi a transaction are correct else return false
+     * @returns {boolean} True is a signature oi a transaction are correct else return false | Boolean
      * @memberof Transaction
      */
     static verifyTransaction(transaction) {

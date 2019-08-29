@@ -26,7 +26,7 @@ class Miner {
     /**
      * Mine the block adding the corresponding transactions,
      * synchronize all the blochchains of the other nodes in the network.
-     * @returns The block that was mined.
+     * @returns The block that was mined. | Block
      * @memberof Miner
      */
     mine() {

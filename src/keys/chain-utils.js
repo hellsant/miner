@@ -24,7 +24,7 @@ class ChainUtil {
     /**
      * Generator of an ID V4
      * @static
-     * @returns An id of V4
+     * @returns An id of V4 | uuidV4
      * @memberof ChainUtil
      */
     static id() {
@@ -35,7 +35,7 @@ class ChainUtil {
      * Create the hash 512 for the received parameter
      * @param {object} data information that will be hashed
      * @static
-     * @returns  a string with the hash sha512
+     * @returns  String | sha512
      * @memberof ChainUtil
      */
     static hash(data) {
@@ -48,7 +48,7 @@ class ChainUtil {
      * @param {string} signature signatue of address to send a transaction
      * @param {hash} dataHash transaction hash
      * @static
-     * @returns {boolean} true if signature are correct else retunrs false
+     * @returns {boolean} True if signature are correct else retunrs false | Boolean
      * @memberof ChainUtil
      */
     static verifySignature(publicKey, signature, dataHash) {

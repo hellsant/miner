@@ -66,7 +66,6 @@ router.get('/transaction', (req, res) => {
     res.render('transaction', { tx: transactions })
 })
 router.get('/wallet', (req, res) => {
-    //const transactions = transactionPool.existingTransaction(wallet.publicKey)
     const balance = wallet.calculateBalance(blockChain);
     res.render('wallet', { tx: wallet ,bal: balance })
 });
@@ -78,8 +77,12 @@ router.get('/public-key', (req, res) => {
 router.post('/send', (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, amount, blockChain, transactionPool);
-    p2pServer.broadcastTransaction(transaction)
-    res.redirect('transaction')
+    if (!transaction){
+        res.render('sendTransaction', { publicKey: wallet.publicKey })
+    } else{
+        p2pServer.broadcastTransaction(transaction)
+        res.redirect('transaction')
+    }
 });
 
 router.get('/send', (req, res) => {

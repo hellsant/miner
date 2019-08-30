@@ -59,7 +59,10 @@ app.get('/addPeer/:port', (req, res) => {
     p2pServer.addPeer(req.hostname, req.params.port)
     res.redirect('back')
 })
-
+app.get('/wallet', (req, res) => {
+    const balance = wallet.calculateBalance(blockChain);
+    res.json({"balance":balance ,"public key": wallet.publicKey})
+});
 app.listen(HTTP_PORT, () => {
     console.log('HTTP servet listening:', HTTP_PORT)
 });

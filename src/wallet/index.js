@@ -44,7 +44,7 @@ class Wallet {
         this.balance = this.calculateBalance(blockchain);
         if (amount > this.balance) {
             console.log(`Amount: ${amount} exceceds current balance: ${this.balance}`);
-            return;
+            return null;
         }
         let transaction = transactionPool.existingTransaction(this.publicKey);
         if (transaction) {
@@ -85,7 +85,7 @@ class Wallet {
             if (transaction.input.timestamp > startTime) {
                 transaction.outputs.find(output => {
                     if (output.address === this.publicKey) {
-                        balance += output.amount;
+                        balance += parseFloat(output.amount);
                     }
                 });
             }

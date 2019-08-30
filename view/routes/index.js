@@ -31,6 +31,7 @@ router.get('/peers', (req, res) => {
 
 router.post('/peers', (req, res) => {
     p2pServer.addPeer(req.body.server, req.body.peerId)
+    p2pServer.syncChains()
     res.render('index')
 });
 

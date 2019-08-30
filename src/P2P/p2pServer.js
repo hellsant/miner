@@ -147,7 +147,7 @@ class p2pServer {
             console.log(error)
         })
         connection.on('open', () => {
-            //this.conectToPeers();
+            //this.connectToPeers();
             this.connectSocket(connection)
         })
     }

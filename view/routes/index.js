@@ -51,7 +51,7 @@ router.get('/transaction', (req, res) => {
 
 router.get('/wallet', (req, res) => {
     const balance = wallet.calculateBalance(blockChain);
-    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, PrivateKey: wallet.keyPair.getPrivate("hex") })
+    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, privateKey: wallet.keyPair.getPrivate("hex") })
 });
 
 router.post('/send', (req, res) => {
@@ -104,4 +104,16 @@ router.get('/addPeer/:port', (req, res) => {
     p2pServer.addPeer(req.hostname, req.params.port)
     res.redirect('back')
 });
+
+router.post('/riteFile', (req, res) => {
+    var fs = require('fs');
+    let{ publicKey , privateKey }= req.body
+    fs.writeFile("Keys.txt", `Llaves de la wallet\n \nLlave Pública: ${publicKey}\n\nLlave Privada: ${privateKey}`, function(err) {
+      if (err) {
+        return console.log(err);
+      }
+    });
+    res.redirect('/wallet')
+});
+
 module.exports = router;

@@ -1,32 +1,55 @@
 <div class="container p-5">
-    <div class="col align-self-center">
-        <div class="card animated flipInY">
-            <div class="card-header bg-dark text-white text-center">
-                <h5 class="card-title">Wallet<small class="text-muted"></small></h5>
+    <form action="/riteFile" method="post">
+        <div class="col align-self-center">
+            <div class="card animated ">
+                <div class="card-header bg-dark text-white text-center">
+                    <h5 class="card-title">Wallet<small class="text-muted"></small></h5>
+                </div>
+                <input type="hidden" id="index" name="publicKey" value="{{publicKey}}">
+                <input type="hidden" id="index" name="privateKey" value="{{privateKey}}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="">Wallet Id</span>
+                        <br>
+                        <div class="text-truncate" style="color:red;">
+                            <small>{{ publicKey }}</small>
+                        </div>
+                    </li>
+                    <!-- <li class="list-group-item">
+                        <span class="">Llave Privada</span>
+                        <br>
+                        <div class="text-truncate" style="color:cadetblue;">
+                            <small>{{ privateKey}}</small>
+                        </div>
+                    </li> -->
+                    <li class="list-group-item">
+                        <span class="">Saldo</span>
+                        <br>
+                        <div class="text-truncate" style="color:blue;">
+                            <small>{{ balance }}</small>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <button type="button" class="list-group-item list-group-item-action" data-toggle="modal"
+                            data-target="#exampleModal">
+                            Generar el Archivo de las llaves
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <span class="">Wallet Id</span>
-                    <br>
-                    <div class="text-truncate" style="color:red;">
-                        <small>{{ publicKey }}</small>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                   <span class="">Llave Privada</span>
-                    <br>
-                    <div class="text-truncate" style="color:cadetblue;">
-                        <small>{{ PrivateKey}}</small>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <span class="">Saldo</span>
-                    <br>
-                    <div class="text-truncate" style="color:blue;">
-                        <small>{{ balance }}</small>
-                    </div>
-                </li>
-            </ul>
         </div>
-    </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Las llaves fueron generadas correctamente
+                    </div>
+                    <div class="modal-footer">
+                        <button  class="btn btn-primary btn-sm">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

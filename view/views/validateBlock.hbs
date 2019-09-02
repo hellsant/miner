@@ -1,0 +1,49 @@
+<div class="container-fluid p-5">
+    <div class="col-md-7 offset-md-3">
+        <form action="/validateBlock" method="post">
+            <div class="card animated flipInY">
+                <div class="card-header bg-dark text-white text-center">
+                    <h3>Verificar Hash del Bloque</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="recipient">Index:</label>
+                        <input type="number" class="form-control" name="index" value="{{index}}"
+                            placeholder=" Indice del bloque " required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">Timestamp:</label>
+                        <input type="number" class="form-control" name="timestamp" value="{{timestamp}}"
+                            placeholder="Direccion de envio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">Hash Anterior:</label>
+                        <input type="text" class="form-control" name="lastHash" value="{{lastHash}}"
+                            placeholder="Direccion de envio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">Transacciones:</label>
+                        <!-- <input type="hidden" id="index" name="data" value="{{data}}"> -->
+                        {{#each data}}
+                        <input type="text" class="form-control" name="data" value="{{id}}"
+                            placeholder="Direccion de envio" required>
+                        {{/each}}
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">Nonce:</label>
+                        <input type="number" class="form-control" name="nonce" value="{{nonce}}"
+                            placeholder="Direccion de envio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">Dificultad:</label>
+                        <input type="number" class="form-control" name="difficulty" value="{{difficulty}}"
+                            placeholder="Direccion de envio" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block" >Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

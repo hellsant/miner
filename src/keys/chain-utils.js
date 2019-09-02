@@ -55,6 +55,16 @@ class ChainUtil {
         return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature)
     }
 
+    /**
+     * From a private key, it generates the calculations for the public key.
+     * From that we can calculate your public key (which doubles as your wallet address)
+     * @param {String} privateKey private key
+     * @returns {Object} object 
+     * @memberof ChainUtil
+     */
+    static verifySignatureWallet(privateKey) {
+        return ec.keyFromPrivate(privateKey).getPublic('hex')
+    }
 }
 
 /**

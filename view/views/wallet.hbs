@@ -9,16 +9,21 @@
                     <span class="">Wallet Id</span>
                     <br>
                     <div class="text-truncate" style="color:red;">
-                        {{!-- <small>{{ tx.input.address }}</small> --}}
-                        <small>{{ tx.publicKey }}</small>
+                        <small>{{ publicKey }}</small>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                   <span class="">Llave Privada</span>
+                    <br>
+                    <div class="text-truncate" style="color:cadetblue;">
+                        <small>{{ PrivateKey}}</small>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <span class="">Saldo</span>
                     <br>
                     <div class="text-truncate" style="color:blue;">
-                        {{!-- <small>{{ tx.input.amount }}</small> --}}
-                        <small>{{ bal }}</small>
+                        <small>{{ balance }}</small>
                     </div>
                 </li>
             </ul>

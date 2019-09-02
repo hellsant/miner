@@ -10,7 +10,6 @@ const Transaction = require('./transaction')
  */
 class Wallet {
 
-   
     /**
      *Creates an instance of Wallet.
      * @memberof Wallet
@@ -29,6 +28,16 @@ class Wallet {
      */
     sign(dataHash) {
         return this.keyPair.sign(dataHash)
+    }
+
+    /**
+     * verify the private key match to public key
+     * @param {string} key private key
+     * @returns Boolean
+     * @memberof Wallet
+     */
+    verifyWalletKeys(key){
+        return ChainUtil.verifySignatureWallet(key) == this.publicKey
     }
 
     /**
@@ -85,7 +94,7 @@ class Wallet {
             if (transaction.input.timestamp > startTime) {
                 transaction.outputs.find(output => {
                     if (output.address === this.publicKey) {
-                        balance += parseFloat(output.amount);
+                        balance += output.amount;
                     }
                 });
             }
@@ -95,13 +104,14 @@ class Wallet {
 
     /**
      * Create a blockchain for the wallet.
+     * Coin Base
      * @static
      * @returns Blockchain wallet | Coinbase
      * @memberof Wallet
      */
     static blockchainWallet() {
         const blockchainWallet = new this();
-        blockchainWallet.address = 'Coinbase-0000xxx'
+        blockchainWallet.address = 'ffff0000-CoinBase'
         return blockchainWallet
     }
 

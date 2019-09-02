@@ -1,0 +1,50 @@
+<div class="container p-5">
+    <div class="col align-self-center">
+        {{#if bMin}}
+        <div class="card animated ">
+            <div class="card-header bg-dark text-white text-center">
+                <h5 class="card-title">Comparacion de Hash Exitosa<small class="text-muted"></small></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="">Hash Generado por los mineros</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(9, 100, 36);">
+                        <small>{{ bMin }}</small>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <span class="">Hash Verificado</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(36, 72, 172);">
+                        <small>{{ bGen }}</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        {{else}}
+
+        <div class="card animated ">
+            <div class="card-header bg-dark text-white text-center">
+                <h5 class="card-title">Error en la comparacion de Hash<small class="text-muted"></small></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="">Hash Generado por los mineros</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(9, 100, 36);">
+                        <small>{{ bErr }}</small>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <span class="">Hash Verificado</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(36, 72, 172);">
+                        <small>{{ bGen }}</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{/if}}
+</div>

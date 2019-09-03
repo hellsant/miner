@@ -22,8 +22,13 @@
                 </li>
             </ul>
         </div>
+        {{else if nGen}}
+          <div class="card animated ">
+            <div class="card-header bg-dark text-white text-center">
+                <h5 class="card-title">El bloque ingresado no existe<small class="text-muted"></small></h5>
+            </div>
+        </div>
         {{else}}
-
         <div class="card animated ">
             <div class="card-header bg-dark text-white text-center">
                 <h5 class="card-title">Error en la comparacion de Hash<small class="text-muted"></small></h5>

@@ -76,17 +76,38 @@ router.post('/validateBlock', (req, res) => {
     const { index, timestamp, lastHash, data, nonce, difficulty } = req.body
     let bloque = blockChain.getChain()[index]
     var count = 0
-    data.forEach(id => {
-        bloque.data.forEach(tr => {
-            if (tr.id == id) count = count + 1
-        });
-    });
-    if (count == data.length) {
-        let bCom = bloque.validateHash(index, timestamp, lastHash, bloque.data, nonce, difficulty);
-        res.render('comparator', { bMin: bloque.hash, bGen: bCom })
+    if (bloque) {
+        if (timestamp == bloque.timestamp) {
+            if (lastHash == bloque.lastHash) {
+                if (nonce == bloque.nonce) {
+                    if (difficulty == bloque.difficulty) {
+                        data.forEach(id => {
+                            bloque.data.forEach(tr => {
+                                if (tr.id == id) count = count + 1
+                            });
+                        });
+                    } else {
+                        let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+                        res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+                    }
+                } else {
+                    let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+                    res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+                }
+            } else {
+                let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+                res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+            }
+        } else {
+            let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+            res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+        }
+        if (count == data.length) {
+            let bCom = bloque.validateHash(index, timestamp, lastHash, bloque.data, nonce, difficulty);
+            res.render('comparator', { bMin: bloque.hash, bGen: bCom })
+        } 
     } else {
-        let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
-        res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+        res.render('comparator', { nGen: "bCom" })
     }
 });
 
@@ -107,11 +128,11 @@ router.get('/addPeer/:port', (req, res) => {
 
 router.post('/riteFile', (req, res) => {
     var fs = require('fs');
-    let{ publicKey , privateKey }= req.body
-    fs.writeFile("Keys.txt", `Llaves de la wallet\n \nLlave Pública: ${publicKey}\n\nLlave Privada: ${privateKey}`, function(err) {
-      if (err) {
-        return console.log(err);
-      }
+    let { publicKey, privateKey } = req.body
+    fs.writeFile("Keys.txt", `Llaves de la wallet\n \nLlave Pública: ${publicKey}\n\nLlave Privada: ${privateKey}`, function (err) {
+        if (err) {
+            return console.log(err);
+        }
     });
     res.redirect('/wallet')
 });

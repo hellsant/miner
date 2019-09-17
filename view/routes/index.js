@@ -87,6 +87,9 @@ router.post('/validateBlock', (req, res) => {
             if (count == data.length) {
                 let bCom = block.validateHash(index, timestamp, lastHash, block.data, nonce, difficulty);
                 res.render('comparator', { bMin: block.hash, bGen: bCom })
+            } else {
+                let bCom = block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+                res.render('comparator', { bErr: block.hash, bGen: bCom })
             }
         } else {
             let bCom = block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);

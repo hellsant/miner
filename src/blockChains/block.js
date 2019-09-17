@@ -69,19 +69,19 @@ class Block {
     const processTime = t2 - t1
     return new this(newIndex, timestamp, lastHash, hash, data, nonce, difficulty, processTime)
   }
-  
-/**
- * validate a actual block hash.
- * @param {Number} index block index
- * @param {number} timestamp Date of Block
- * @param {String} lastHash Last hash of block
- * @param {Object} data Transacctions
- * @param {Number} nonce Number of zeros added the beginning of the hash.
- * @param {Number} difficulty Dificulty to add in nonce.
- * @returns A block with its corresponding hash. | Block hashed
- * @memberof Block
- */
-  validateHash(index, timestamp, lastHash, data, nonce, difficulty){
+
+  /**
+   * validate a actual block hash.
+   * @param {Number} index block index
+   * @param {number} timestamp Date of Block
+   * @param {String} lastHash Last hash of block
+   * @param {Object} data Transacctions
+   * @param {Number} nonce Number of zeros added the beginning of the hash.
+   * @param {Number} difficulty Dificulty to add in nonce.
+   * @returns A block with its corresponding hash. | Block hashed
+   * @memberof Block
+   */
+  validateHash(index, timestamp, lastHash, data, nonce, difficulty) {
     return Block.hasher(index, timestamp, lastHash, data, nonce, difficulty)
   }
 
@@ -148,6 +148,16 @@ class Block {
       Difficulty : ${this.difficulty}
       Data       : ${this.data}
       ProsessTime: ${this.processTime}`;
+  }
+
+  /**
+     *create a string with the block information for comparations.
+     *
+     * @returns the content of a block in the form of a string
+     * @memberof Block
+     */
+  toStringComparable() {
+    return this.lastHash + this.nonce + this.difficulty + this.index + this.timestamp;
   }
 }
 /**

@@ -68,44 +68,30 @@ router.post('/send', (req, res) => {
 });
 
 router.get('/validateBlock', (req, res) => {
-    let bloque = blockChain.getChain()[blockChain.getChain().length - 1]
-    res.render('validateBlock', { index: bloque.index, timestamp: bloque.timestamp, lastHash: bloque.lastHash, data: bloque.data, nonce: bloque.nonce, difficulty: bloque.difficulty })
+    let block = blockChain.getChain()[blockChain.getChain().length - 1]
+    res.render('validateBlock', { index: block.index, timestamp: block.timestamp, lastHash: block.lastHash, data: block.data, nonce: block.nonce, difficulty: block.difficulty })
 });
 
 router.post('/validateBlock', (req, res) => {
     const { index, timestamp, lastHash, data, nonce, difficulty } = req.body
-    let bloque = blockChain.getChain()[index]
+    let block = blockChain.getChain()[index]
     var count = 0
-    if (bloque) {
-        if (timestamp == bloque.timestamp) {
-            if (lastHash == bloque.lastHash) {
-                if (nonce == bloque.nonce) {
-                    if (difficulty == bloque.difficulty) {
-                        data.forEach(id => {
-                            bloque.data.forEach(tr => {
-                                if (tr.id == id) count = count + 1
-                            });
-                        });
-                    } else {
-                        let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
-                        res.render('comparator', { bErr: bloque.hash, bGen: bCom })
-                    }
-                } else {
-                    let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
-                    res.render('comparator', { bErr: bloque.hash, bGen: bCom })
-                }
-            } else {
-                let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
-                res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+    if (block) {
+        let str = lastHash + nonce + difficulty + index + timestamp
+        if (str === block.toStringComparable()) {
+            data.forEach(id => {
+                block.data.forEach(tr => {
+                    if (tr.id == id) count = count + 1
+                });
+            });
+            if (count == data.length) {
+                let bCom = block.validateHash(index, timestamp, lastHash, block.data, nonce, difficulty);
+                res.render('comparator', { bMin: block.hash, bGen: bCom })
             }
         } else {
-            let bCom = bloque.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
-            res.render('comparator', { bErr: bloque.hash, bGen: bCom })
+            let bCom = block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+            res.render('comparator', { bErr: block.hash, bGen: bCom })
         }
-        if (count == data.length) {
-            let bCom = bloque.validateHash(index, timestamp, lastHash, bloque.data, nonce, difficulty);
-            res.render('comparator', { bMin: bloque.hash, bGen: bCom })
-        } 
     } else {
         res.render('comparator', { nGen: "bCom" })
     }
@@ -113,8 +99,8 @@ router.post('/validateBlock', (req, res) => {
 
 router.post('/viewTransactions', (req, res) => {
     let { index } = req.body
-    let bloque = blockChain.getChain()[parseInt(index)]
-    res.render('viewTransactions', { tx: bloque.data })
+    let block = blockChain.getChain()[parseInt(index)]
+    res.render('viewTransactions', { tx: block.data })
 });
 
 router.get('/send', (req, res) => {

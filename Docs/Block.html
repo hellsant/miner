@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <title>JSDoc: Block</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -76,11 +78,14 @@
                 <div class="members">
                     <div class="member">
 
+
     
     <h4 class="name" id="Block">
         
         <span class="code-name">
-            new Block<span class="signature">()</span><span class="type-signature"></span>
+            
+                new Block<span class="signature">()</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -171,7 +176,7 @@
         
     
     </div>
-
+    
     
 
     
@@ -200,6 +205,7 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id=".adjustDifficulty">
         
@@ -208,7 +214,9 @@
             
         
         <span class="code-name">
-            adjustDifficulty<span class="signature">(lastBlock, currentTime)</span><span class="type-signature"></span>
+            
+                adjustDifficulty<span class="signature">(lastBlock, currentTime)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -389,6 +397,7 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id=".blockHash">
         
@@ -397,7 +406,9 @@
             
         
         <span class="code-name">
-            blockHash<span class="signature">(block)</span><span class="type-signature"></span>
+            
+                blockHash<span class="signature">(block)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -553,6 +564,7 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id=".genesis">
         
@@ -561,7 +573,9 @@
             
         
         <span class="code-name">
-            genesis<span class="signature">()</span><span class="type-signature"></span>
+            
+                genesis<span class="signature">()</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -667,6 +681,7 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id=".hasher">
         
@@ -675,7 +690,9 @@
             
         
         <span class="code-name">
-            hasher<span class="signature">(index, timestamp, lastHash, data, nonce, difficulty)</span><span class="type-signature"></span>
+            
+                hasher<span class="signature">(index, timestamp, lastHash, data, nonce, difficulty)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -956,6 +973,7 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id=".mineBlock">
         
@@ -964,7 +982,9 @@
             
         
         <span class="code-name">
-            mineBlock<span class="signature">(lastBlock, data)</span><span class="type-signature"></span>
+            
+                mineBlock<span class="signature">(lastBlock, data)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1145,11 +1165,14 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id="toString">
         
         <span class="code-name">
-            toString<span class="signature">()</span><span class="type-signature"></span>
+            
+                toString<span class="signature">()</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1255,11 +1278,127 @@
             
                 <div class="member">
 
+
+    
+    <h4 class="name" id="toStringComparable">
+        
+        <span class="code-name">
+            
+                toStringComparable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        create a string with the block information for comparations.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="blockChains_block.js.html" class="button">View Source</a>
+            <span>
+                <a href="blockChains_block.js.html">blockChains/block.js</a>, <a href="blockChains_block.js.html#line159">line 159</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>the content of a block in the form of a string</div>
+    
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
     
     <h4 class="name" id="validateHash">
         
         <span class="code-name">
-            validateHash<span class="signature">(index, timestamp, lastHash, data, nonce, difficulty)</span><span class="type-signature"></span>
+            
+                validateHash<span class="signature">(index, timestamp, lastHash, data, nonce, difficulty)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1559,15 +1698,14 @@
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Sep 01 2019 22:24:01 GMT-0400 (GMT-04:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Sep 16 2019 22:03:38 GMT-0400 (GMT-04:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

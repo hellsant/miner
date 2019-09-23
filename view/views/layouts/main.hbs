@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CryptoCoin</title>
-    
+
     <link rel="shortcut icon" href="/ico/favicon.ico">
     <!--boostrap css-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -31,13 +31,24 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
                     <a class="nav-item nav-link active" href="/">Principal <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="/peers">Peers</a>
                     <a class="nav-item nav-link" href="/blockchain">BlockChain</a>
-                    <a class="nav-item nav-link" href="/send">Envio</a>
                     <a class="nav-item nav-link" href="/transaction">Transacciones</a>
+                    <a class="nav-item nav-link" href="/send">Envio</a>
                     <a class="nav-item nav-link" href="/wallet">wallet</a>
-                    <a class="nav-item nav-link" href="/validateBlock">Validador</a>
-                    <a class="nav-item nav-link" href="/mine">Minar</a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Opciones
+                            </a>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item nav-item nav-link" href="/peers">Peers</a>
+                                <a class="dropdown-item nav-item nav-link" href="/validateBlock">Validador</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item nav-item nav-link" href="/mine">Minar</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

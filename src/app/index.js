@@ -63,6 +63,10 @@ app.get('/wallet', (req, res) => {
     const balance = wallet.calculateBalance(blockChain);
     res.json({"balance":balance ,"public key": wallet.publicKey})
 });
+app.get('/wallet-balance/:val', (req, res) => {
+    const val = blockChain.getAllTransactionsForWallet(req.params.val);
+    res.json({val})
+});
 app.listen(HTTP_PORT, () => {
     console.log('HTTP servet listening:', HTTP_PORT)
 });

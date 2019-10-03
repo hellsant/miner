@@ -1,8 +1,8 @@
 <div class="container p-5">
-    <div class="p-2">
+    {{#if tx }}
+    {{#each tx}}
+    <div class="col align-self-center p-2">
         <div class="card animated flipInY">
-            {{#if tx }}
-            {{#each tx}}
             <div class="card-header bg-dark text-white text-center">
                 <h5 class="card-title">transacciones pendientes<small class="text-muted"></small></h5>
                 <div class="text-truncate">
@@ -11,27 +11,29 @@
             </div>
             <ul class="list-group list-group-flush">
                 {{#each outputs}}
+                  {{#if @first}}
+                  {{else}}
                 <li class="list-group-item">
-                    <span class="">address</span>
+                    <span class="">Destinatario</span>
                     <br>
                     <div class="text-truncate" style="color:red;">
                         <small>{{ address }}</small>
                     </div>
-                    <span class="">Monto</span>
+                    <span class="">Monto a Enviar</span>
                     <br>
                     <div class="text-truncate" style="color:blue;">
                         <small>{{ amount }}</small>
                     </div>
                 </li>
+                {{/if}}
                 {{/each}}
             </ul>
-            {{/each}}
-            {{else}}
-            <div class="card-header bg-dark text-white text-center">
-                <h5 class="card-title">No existe transacciones pendientes<small class="text-muted"></small></h5>
-            </div>
-            {{/if}}
         </div>
     </div>
-
+    {{/each}}
+    {{else}}
+    <div class="card-header bg-dark text-white text-center">
+        <h5 class="card-title">No existe transacciones pendientes<small class="text-muted"></small></h5>
+    </div>
+    {{/if}}
 </div>

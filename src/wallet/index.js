@@ -111,7 +111,7 @@ class Wallet {
      */
     static blockchainWallet() {
         const blockchainWallet = new this();
-        blockchainWallet.address = 'ffff0000-CoinBase'
+        blockchainWallet.address = 'CoinBase-0000FFFF'
         return blockchainWallet
     }
 

@@ -51,7 +51,8 @@ router.get('/transaction', (req, res) => {
 
 router.get('/wallet', (req, res) => {
     const balance = wallet.calculateBalance(blockChain);
-    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, privateKey: wallet.keyPair.getPrivate("hex") })
+    const extracto = blockChain.getAllTransactionsForWallet(wallet.publicKey).filter(datas => wallet.publicKey != datas.to);  
+    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, privateKey: wallet.keyPair.getPrivate("hex"), extracto : extracto })
 });
 
 router.post('/send', (req, res) => {

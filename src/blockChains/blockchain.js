@@ -9,7 +9,6 @@ const Block = require("./block");
  */
 class Blockchain {
 
- 
   /**
    * Creates an instance of Blockchain.
    * @memberof Blockchain
@@ -91,6 +90,28 @@ class Blockchain {
    */
   getChain() {
     return this.chain
+  }
+
+  /**
+   * Get all the transaccions for the wallet user.
+   * @param {String} address address of wallet to review
+   * @return {Array<transactions>} Transactions
+   * @memberof Blockchain
+   */
+  getAllTransactionsForWallet(address) {
+    const txs = [];
+    this.chain.forEach(block => {
+      block.data.forEach(outs => {
+        outs.outputs.forEach(a => {
+          if (a.address === address) {
+            txs.push({
+              to: outs.input.address, amount: a.amount, from: a.address, blockchainWalletaddress: a.blockchainWalletaddress, timestamp: outs.input.timestamp
+            })
+          }
+        });
+      });
+    });
+    return txs;
   }
 }
 /** 

@@ -9,7 +9,7 @@
                 <input type="hidden" id="index" name="privateKey" value="{{privateKey}}">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <span class="">Wallet Id</span>
+                        <span class="">LLave Pública</span>
                         <br>
                         <div class="text-truncate" style="color:red;">
                             <small>{{ publicKey }}</small>
@@ -46,10 +46,64 @@
                         Las llaves fueron generadas correctamente
                     </div>
                     <div class="modal-footer">
-                        <button  class="btn btn-primary btn-sm">Aceptar</button>
+                        <button class="btn btn-primary btn-sm">Aceptar</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    <span></span>
+    {{#if extracto}}
+    <div class="container col align-self-center">
+        <div class=" col align-self-center p-2">
+            <table class="table table-striped table-responsive-lg">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Remitente</th>
+                        <th scope="col">Para</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {{#each extracto}}
+                    <tr class="table-light" data-spy="scroll" >
+                        <th>{{@index}}</th>
+                        <td>{{amount}}</td>
+                        {{#if blockchainWalletaddress}}
+                        <td class="text-truncate" style="max-width: 100px;">
+                            <a href="">
+                                {{blockchainWalletaddress}}
+                            </a>
+                            <span class="text-muted">
+                                <br><small>Recompensa de Minado</small>
+                            </span>
+                        </td>
+                        {{else}}
+                        <td class="text-truncate" style="max-width: 100px;">
+                            <a href="">
+                                {{to}}
+                            </a>
+                        </td>
+                        {{/if}}
+                        <td class="text-truncate" style="max-width: 100px;">
+                            <a href="/wallet">
+                                {{from}}
+                            </a>
+                            <span class="text-muted">
+                                <br><small>Mi wallet</small>
+                            </span>
+                        </td>
+                        <td class="text-truncate" style="max-width: 100px;">
+                            {{timestamp}}<br>
+                            <span class="text-muted"><small>{{prettifyDate timestamp}}</small></span>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/if}}
 </div>

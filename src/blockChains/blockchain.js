@@ -103,9 +103,9 @@ class Blockchain {
     this.chain.forEach(block => {
       block.data.forEach(outs => {
         outs.outputs.forEach(a => {
-          if (a.address === address) {
+          if (a.address === address || outs.input.address === address) {
             txs.push({
-              to: outs.input.address, amount: a.amount, from: a.address, blockchainWalletaddress: a.blockchainWalletaddress, timestamp: outs.input.timestamp
+              to: outs.input.address, amount: a.amount, from: a.address, blockchainWalletaddress: a.blockchainWalletaddress, timestamp: outs.input.timestamp, key: address
             })
           }
         });

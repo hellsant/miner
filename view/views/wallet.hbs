@@ -11,7 +11,7 @@
                     <li class="list-group-item">
                         <span class="">LLave Pública</span>
                         <br>
-                        <div class="text-truncate" style="color:red;">
+                        <div class="text-truncate" style="color:rgba(255, 17, 0, 0.829);">
                             <small>{{ publicKey }}</small>
                         </div>
                     </li>
@@ -25,7 +25,7 @@
                     <li class="list-group-item">
                         <span class="">Saldo</span>
                         <br>
-                        <div class="text-truncate" style="color:blue;">
+                        <div class="text-truncate" style="color:rgba(5, 108, 218, 0.87);">
                             <small>{{ balance }}</small>
                         </div>
                     </li>
@@ -52,57 +52,69 @@
             </div>
         </div>
     </form>
-    <span></span>
+</div>
+<div class="container p-5">
     {{#if extracto}}
-    <div class="container col align-self-center">
-        <div class=" col align-self-center p-2">
-            <table class="table table-striped table-responsive-lg">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Monto</th>
-                        <th scope="col">Remitente</th>
-                        <th scope="col">Para</th>
-                        <th scope="col">Fecha</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {{#each extracto}}
-                    <tr class="table-light" data-spy="scroll" >
-                        <th>{{@index}}</th>
-                        <td>{{amount}}</td>
-                        {{#if blockchainWalletaddress}}
-                        <td class="text-truncate" style="max-width: 100px;">
-                            <a href="">
-                                {{blockchainWalletaddress}}
-                            </a>
-                            <span class="text-muted">
-                                <br><small>Recompensa de Minado</small>
-                            </span>
-                        </td>
-                        {{else}}
-                        <td class="text-truncate" style="max-width: 100px;">
-                            <a href="">
-                                {{to}}
-                            </a>
-                        </td>
-                        {{/if}}
-                        <td class="text-truncate" style="max-width: 100px;">
-                            <a href="/wallet">
-                                {{from}}
-                            </a>
-                            <span class="text-muted">
-                                <br><small>Mi wallet</small>
-                            </span>
-                        </td>
-                        <td class="text-truncate" style="max-width: 100px;">
-                            {{timestamp}}<br>
-                            <span class="text-muted"><small>{{prettifyDate timestamp}}</small></span>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+    <div class="col align-self-center">
+        <div class="card">
+            <div class="card-header bg-dark text-white text-center">
+                <h5 class="card-title">Transacciones <br><small class="text-muted">Historial de transacciones de la
+                        wallet</small></h5>
+            </div>
+            <div class="card-body">
+                <div class="container col align-self-center">
+                    <div class=" col align-self-center p-2">
+                        <table class="table table-striped table-responsive-lg ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">De</th>
+                                    <th scope="col">Para</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each extracto}}
+                                <tr class="table-light" data-spy="scroll">
+                                    <th scope="row" style="max-width: 100px;">{{@index}}</th>
+                                    {{#if blockchainWalletaddress}}
+                                    <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
+                                        {{blockchainWalletaddress}}
+                                        <span class="text-muted">
+                                            <br><small>Recompensa de Minado</small>
+                                        </span>
+                                    </td>
+                                    {{else}}
+                                    <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
+                                        {{to}}
+                                        {{#ifCond key to}}
+                                        <span class="text-muted">
+                                            <br><small>Mi wallet</small>
+                                        </span>
+                                        {{/ifCond}}
+                                    </td>
+                                    {{/if}}
+                                    <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
+                                        {{from}}
+                                        {{#ifCond key from}}
+                                        <span class="text-muted">
+                                            <br><small>Mi wallet</small>
+                                        </span>
+                                        {{/ifCond}}
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 100px;"> {{amount}}</td>
+                                    <td class="text-truncate" style="max-width: 100px;">
+                                        {{timestamp}}<br>
+                                        <span class="text-muted"><small>{{prettifyDate timestamp}}</small></span>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{/if}}

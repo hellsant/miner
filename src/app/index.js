@@ -35,7 +35,7 @@ app.get('/p2pPort', (req, res) => {
 })
 
 app.get('/transactions', (req, res) => {
-    res.json(transactionPool.transactions)
+    res.json(transactionPool.getTransactions())
 })
 
 app.get('/public-key', (req, res) => {

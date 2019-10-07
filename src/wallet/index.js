@@ -36,7 +36,7 @@ class Wallet {
      * @returns Boolean
      * @memberof Wallet
      */
-    verifyWalletKeys(key){
+    verifyWalletKeys(key) {
         return ChainUtil.verifySignatureWallet(key) == this.publicKey
     }
 

@@ -54,6 +54,29 @@
     </form>
 </div>
 <div class="container p-5">
+    <div class="col align-self-center">
+        <div class="card text-center">
+            <div class="card-header bg-dark text-white text-center">
+                <h5 class="card-title">Comprar <br><small class="text-muted"></small></h5>
+            </div>
+            <div class="card-body">
+
+                <h5 class="card-title">Compra de crytocoins</h5>
+                <p class="card-text">El costo de un token de criptocoin es de 1 USD, una vez realizado el pago de los
+                    tokes estos se le acreditaran a su wallet cuando el bloque actulal sea minado. </p>
+                <form class="form-inline" action="pay" method="post">
+                    <input type="number" name="valor" id="valor" min="1" pattern="^[0-9]+" required>
+                    &nbsp;
+                    &nbsp;
+                    <input type="image" value="valor"
+                        src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_14.png"
+                        alt="PayPal Credit" border="0">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container p-5">
     {{#if extracto}}
     <div class="col align-self-center">
         <div class="card">

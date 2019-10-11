@@ -100,12 +100,33 @@ class Blockchain {
    */
   getAllTransactionsForWallet(address) {
     const txs = [];
-    this.chain.forEach(block => {
-      block.data.forEach(outs => {
-        outs.outputs.forEach(a => {
-          if (a.address === address || outs.input.address === address) {
+    this.getChain().forEach(block => {
+      block.data.forEach(transaction => {
+        transaction.outputs.forEach(output => {
+          if (output.address === address) {
             txs.push({
-              to: outs.input.address, amount: a.amount, from: a.address, blockchainWalletaddress: a.blockchainWalletaddress, timestamp: outs.input.timestamp, key: address
+              from: transaction.input.address,
+              to: output.address,
+              amount: output.amount,
+              blockchainWalletaddress: output.blockchainWalletaddress,
+              timestamp: transaction.input.timestamp,
+              key: address,
+              numBlock: block.index,
+              transactionID: transaction.id,
+              inputAmount: transaction.input.amount
+            })
+          }
+          if(transaction.input.address === address){
+            txs.push({
+              from: transaction.input.address,
+              to: output.address,
+              amount: - output.amount,
+              blockchainWalletaddress: output.blockchainWalletaddress,
+              timestamp: transaction.input.timestamp,
+              key: address,
+              numBlock: block.index,
+              transactionID: transaction.id,
+              inputAmount: transaction.input.amount
             })
           }
         });

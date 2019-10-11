@@ -10,18 +10,33 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush">
-                {{#each outputs}}
-                  {{#if @first}}
-                  {{else}}
                 <li class="list-group-item">
-                    <span class="">Destinatario</span>
+                    <span class="">Llave Publica Origen</span>
                     <br>
-                    <div class="text-truncate" style="color:red;">
+                    <div class="text-truncate" style="color:rgb(133, 126, 126)">
+                        <small>{{ input.address }}</small>
+                    </div>
+                    <span class="">Fecha y Hora</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(133, 126, 126)">
+                        {{ input.timestamp}} <br>
+                        <small>{{prettifyDate input.timestamp}}</small>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list-group list-group-flush">
+                {{#each outputs}}
+                {{#if @first}}
+                {{else}}
+                <li class="list-group-item">
+                    <span class="">Llave Pública Destino</span>
+                    <br>
+                    <div class="text-truncate" style="color:rgb(90, 122, 90);">
                         <small>{{ address }}</small>
                     </div>
                     <span class="">Monto a Enviar</span>
                     <br>
-                    <div class="text-truncate" style="color:blue;">
+                    <div class="text-truncate" style="color:rgb(136, 71, 71);">
                         <small>{{ amount }}</small>
                     </div>
                 </li>

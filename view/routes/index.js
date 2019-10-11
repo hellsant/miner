@@ -21,6 +21,7 @@ paypal.configure({
     'client_id': 'ASPRF5TMQkha2S1OVQljifwYAfUF34N5Qxk4CsNiR7j1x8LR9UNl5xPHww0fnAhkzX91rexK62ovNvHj',
     'client_secret': 'ELA7qG1jwsUCuHNBjFRPv9YY4Ad6S55XW2QisqJwSjrdbbTc3ZnDw4PYiSelv1kDbGgdUF1-jhwm4LxO'
 });
+
 router.get('/', (req, res) => {
     res.render('index')
 });
@@ -34,14 +35,14 @@ router.get('/peers', (req, res) => {
     res.render('peers', { port: p2pServer.getP2Pport })
 });
 
-router.post('/peers', async (req, res) => {
+router.post('/peers', (req, res) => {
     p2pServer.addPeer(req.body.server, req.body.peerId)
     p2pServer.syncChains()
     res.render('index')
 });
 
-router.post('/mine', async (req, res) => {
-    await miner.mine();
+router.post('/mine', (req, res) => {
+    miner.mine();
     res.redirect('blockchain')
 });
 
@@ -57,13 +58,23 @@ router.get('/transaction', (req, res) => {
 router.get('/wallet', (req, res) => {
     const balance = wallet.calculateBalance(blockChain);
     const extracto = blockChain.getAllTransactionsForWallet(wallet.publicKey).filter(datas => datas.from != datas.to);
-    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, privateKey: wallet.keyPair.getPrivate("hex"), extracto: extracto })
+    var income = 0;
+    var discharge = 0;
+    for (let index = 0; index < extracto.length; index++) {
+        const element = extracto[index];
+        if (element.amount > 0) {
+            income = income + element.amount
+        } else {
+            discharge = element.amount + discharge
+        }
+    }
+    res.render('wallet', { publicKey: wallet.publicKey, balance: balance, extracto: extracto, count: income, dcount: discharge })
 });
 
-router.post('/send', async (req, res) => {
+router.post('/send', (req, res) => {
     const { recipient, amount, privateKey } = req.body;
     if (wallet.verifyWalletKeys(privateKey)) {
-        const transaction = await wallet.createTransaction(recipient, parseFloat(amount), blockChain, transactionPool);
+        const transaction = wallet.createTransaction(recipient, parseFloat(amount), blockChain, transactionPool);
         if (transaction) {
             p2pServer.broadcastTransaction(transaction)
             res.redirect('transaction')
@@ -78,7 +89,7 @@ router.get('/validateBlock', (req, res) => {
     res.render('validateBlock', { index: block.index, timestamp: block.timestamp, lastHash: block.lastHash, data: block.data, nonce: block.nonce, difficulty: block.difficulty })
 });
 
-router.post('/validateBlock', async (req, res) => {
+router.post('/validateBlock', (req, res) => {
     const { index, timestamp, lastHash, data, nonce, difficulty } = req.body
     let block = blockChain.getChain()[index]
     var count = 0
@@ -91,14 +102,14 @@ router.post('/validateBlock', async (req, res) => {
                 });
             });
             if (count == data.length) {
-                let bCom = await block.validateHash(index, timestamp, lastHash, block.data, nonce, difficulty);
+                let bCom = block.validateHash(index, timestamp, lastHash, block.data, nonce, difficulty);
                 res.render('comparator', { bMin: block.hash, bGen: bCom })
             } else {
-                let bCom = await block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+                let bCom = block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
                 res.render('comparator', { bErr: block.hash, bGen: bCom })
             }
         } else {
-            let bCom = await block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
+            let bCom = block.validateHash(index, timestamp, lastHash, data, nonce, difficulty);
             res.render('comparator', { bErr: block.hash, bGen: bCom })
         }
     } else {
@@ -106,7 +117,7 @@ router.post('/validateBlock', async (req, res) => {
     }
 });
 
-router.post('/viewTransactions', async (req, res) => {
+router.post('/viewTransactions', (req, res) => {
     let { index } = req.body
     let block = blockChain.getChain()[parseInt(index)]
     res.render('viewTransactions', { tx: block.data })
@@ -121,10 +132,10 @@ router.get('/addPeer/:port', (req, res) => {
     res.redirect('back')
 });
 
-router.post('/riteFile', async (req, res) => {
+router.post('/riteFile', (req, res) => {
     var fs = require('fs');
-    let { publicKey, privateKey } = req.body
-    fs.writeFile("Keys.txt", `Llaves de la wallet\n \nLlave Pública: ${publicKey}\n\nLlave Privada: ${privateKey}`, function (err) {
+    const privateKey = wallet.keyPair.getPrivate('hex');
+    fs.writeFile("Keys.txt", `Llaves de la wallet\n \nLlave Pública: ${wallet.publicKey}\n\nLlave Privada: ${privateKey}`, function (err) {
         if (err) {
             return console.log(err);
         }
@@ -175,7 +186,7 @@ router.post('/pay', (req, res) => {
 
 });
 
-router.get('/success', async (req, res) => {
+router.get('/success', (req, res) => {
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
     let amount = req.query.total
@@ -190,13 +201,13 @@ router.get('/success', async (req, res) => {
         }]
     };
 
-    paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
+    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
         if (error) {
             console.log(error.response);
             throw error;
         } else {
             if (payment.state == 'approved') {
-                const transaction = await Wallet.blockchainWallet().createTransaction(wallet.publicKey, parseFloat(amount), blockChain, transactionPool);
+                const transaction = Wallet.blockchainWallet().createTransaction(wallet.publicKey, parseFloat(amount), blockChain, transactionPool);
                 p2pServer.broadcastTransaction(transaction)
                 res.redirect('/wallet')
             } else {
@@ -208,5 +219,12 @@ router.get('/success', async (req, res) => {
 });
 
 router.get('/cancel', (req, res) => res.redirect('/wallet'));
+
+router.get('/extract/:index', (req, res) => {
+    console.log(req.query.index)
+    const extracto = blockChain.getAllTransactionsForWallet(wallet.publicKey).filter(datas => datas.from != datas.to)[parseInt(req.query.index)];
+    console.log(extracto)
+    res.render('extract', { extracto: extracto })
+});
 
 module.exports = router;

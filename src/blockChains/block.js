@@ -98,7 +98,7 @@ class Block {
     let { difficulty } = lastBlock
     difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty + 1 : difficulty - 1
     if (difficulty == 0) {
-      difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty - 1 : difficulty + 3
+      difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty - 1 : difficulty + DIFFICULTY
     }
     return difficulty
   }

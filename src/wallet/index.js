@@ -112,6 +112,7 @@ class Wallet {
     static blockchainWallet() {
         const blockchainWallet = new this();
         blockchainWallet.address = 'CoinBase-0000FFFF'
+        blockchainWallet.balance = 999999
         return blockchainWallet
     }
 

@@ -7,18 +7,21 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <span class="">Llave Publica</span>
+                <span class="">Llave Pública de Origen</span>
                 <div class="text-truncate" style="color:rgba(16, 124, 138, 0.767);">
                     <small>{{ input.address }}</small>
                 </div>
-                <span class="">Tiempo</span>
+                <span class="">Fecha y Hora</span>
                 <div class="text-truncate" style="color:rgba(16, 124, 138, 0.767);">
+                    {{ input.timestamp}} <br>
                     <small>{{prettifyDate input.timestamp}}</small>
                 </div>
             </li>
             <li class="list-group-item">
                 {{#each outputs}}
-                <span class="">Llave Publica</span>
+                {{#if @first}}
+                {{#if blockchainWalletaddress}}
+                <span class="">Llave Pública Destino</span>
                 <div class="text-truncate" style="color:rgba(31, 77, 17, 0.664);">
                     <small>{{ address }}</small>
                 </div>
@@ -26,6 +29,17 @@
                 <div class="text-truncate" style="color:rgba(31, 77, 17, 0.664);">
                     <small>{{ amount }}</small>
                 </div>
+                {{/if}}
+                {{else}}
+                <span class="">Llave Pública Destino</span>
+                <div class="text-truncate" style="color:rgba(31, 77, 17, 0.664);">
+                    <small>{{ address }}</small>
+                </div>
+                <span class="">Monto Enviado</span>
+                <div class="text-truncate" style="color:rgba(31, 77, 17, 0.664);">
+                    <small>{{ amount }}</small>
+                </div>
+                {{/if}}
                 {{/each}}
             </li>
         </ul>

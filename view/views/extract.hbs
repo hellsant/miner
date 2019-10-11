@@ -1,0 +1,61 @@
+<div class="container p-5">
+    <div class="col align-self-center">
+        <div class="card ">
+            <div class="card-header bg-dark text-white text-center">
+                <h3>Detalle</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label"><strong>Origen </strong></label>
+                    <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                        {{extracto.from}}
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label"> <strong>Destino</strong></label>
+                    <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                        {{extracto.to}}
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label"> <strong>Monto</strong></label>
+                    <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                        {{inOutAmount extracto.key extracto.from extracto.amount}}
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label"> <strong>Fecha</strong></label>
+                    <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                        {{extracto.timestamp}}<br>
+                        <span class="text-muted"><small>{{prettifyDate extracto.timestamp}}</small></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label"> <strong>Bloque</strong></label>
+                    <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                        {{extracto.numBlock}}
+                    </div>
+                </div>
+                <hr>
+                <form action="/viewTransactions" method="post">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label"> <strong>ID de la
+                                Transaccion</strong></label>
+                        <div class="col-sm-10" style="color:rgba(68, 80, 92, 0.87);">
+                            <input type="hidden" id="index" name="index" value="{{extracto.numBlock}}">
+                            <button class="btn" style="outline: transparent;color:rgba(68, 80, 92, 0.87);">
+                                {{extracto.transactionID}}
+                            </button>
+                        </div>
+                </form>
+            </div>
+            <div class="footer text-right">
+                <input class="btn btn-primary" type="button" value="Atras" onclick="history.back()">
+            </div>
+        </div>
+    </div>
+</div>

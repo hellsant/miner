@@ -5,27 +5,18 @@
                 <div class="card-header bg-dark text-white text-center">
                     <h5 class="card-title">Wallet<small class="text-muted"></small></h5>
                 </div>
-                <input type="hidden" id="index" name="publicKey" value="{{publicKey}}">
-                <input type="hidden" id="index" name="privateKey" value="{{privateKey}}">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <span class="">LLave Pública</span>
                         <br>
-                        <div class="text-truncate" style="color:rgba(255, 17, 0, 0.829);">
+                        <div class="text-truncate" style="color:rgba(57, 83, 75, 0.829);">
                             <small>{{ publicKey }}</small>
                         </div>
                     </li>
-                    <!-- <li class="list-group-item">
-                        <span class="">Llave Privada</span>
-                        <br>
-                        <div class="text-truncate" style="color:cadetblue;">
-                            <small>{{ privateKey}}</small>
-                        </div>
-                    </li> -->
                     <li class="list-group-item">
                         <span class="">Saldo</span>
                         <br>
-                        <div class="text-truncate" style="color:rgba(5, 108, 218, 0.87);">
+                        <div class="text-truncate" style="color:rgba(68, 80, 92, 0.87);">
                             <small>{{ balance }}</small>
                         </div>
                     </li>
@@ -60,12 +51,13 @@
                 <h5 class="card-title">Comprar <br><small class="text-muted"></small></h5>
             </div>
             <div class="card-body">
-
                 <h5 class="card-title">Compra de crytocoins</h5>
-                <p class="card-text">El costo de un token de criptocoin es de 1 USD, una vez realizado el pago de los
+                <p class="card-text">El costo de un token de criptocoin es de 1 USD, una vez realizado el pago de
+                    los
                     tokes estos se le acreditaran a su wallet cuando el bloque actulal sea minado. </p>
                 <form class="form-inline" action="pay" method="post">
-                    <input type="number" name="valor" id="valor" min="1" pattern="^[0-9]+" required>
+                    <input class="form-control" type="number" name="valor" id="valor" min="1" pattern="^[0-9]+"
+                        required>
                     &nbsp;
                     &nbsp;
                     <input type="image" value="valor"
@@ -81,8 +73,8 @@
     <div class="col align-self-center">
         <div class="card">
             <div class="card-header bg-dark text-white text-center">
-                <h5 class="card-title">Transacciones <br><small class="text-muted">Historial de transacciones de la
-                        wallet</small></h5>
+                <h5 class="card-title">Transacciones <br>
+                    <small class="text-muted">Historial de transacciones de la wallet</small></h5>
             </div>
             <div class="card-body">
                 <div class="container col align-self-center">
@@ -91,48 +83,67 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">De</th>
-                                    <th scope="col">Para</th>
+                                    <th scope="col">Origen</th>
+                                    <th scope="col">Destino</th>
                                     <th scope="col">Monto</th>
                                     <th scope="col">Fecha</th>
+                                    <th scope="col">Detalle</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#each extracto}}
-                                <tr class="table-light" data-spy="scroll">
-                                    <th scope="row" style="max-width: 100px;">{{@index}}</th>
+                                <tr data-spy="scroll">
+                                    <td scope="row" style="max-width: 100px;">{{@index}}</td>
                                     {{#if blockchainWalletaddress}}
                                     <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
                                         {{blockchainWalletaddress}}
-                                        <span class="text-muted">
-                                            <br><small>Recompensa de Minado</small>
-                                        </span>
+                                        <span class="text-muted"> <br><small>Recompensa de Minado</small> </span>
                                     </td>
                                     {{else}}
                                     <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
-                                        {{to}}
-                                        {{#ifCond key to}}
-                                        <span class="text-muted">
-                                            <br><small>Mi wallet</small>
-                                        </span>
-                                        {{/ifCond}}
-                                    </td>
-                                    {{/if}}
-                                    <td class="text-truncate" style="max-width: 100px;color:rgb(0, 123, 255)">
                                         {{from}}
                                         {{#ifCond key from}}
-                                        <span class="text-muted">
-                                            <br><small>Mi wallet</small>
-                                        </span>
-                                        {{/ifCond}}
+                                        <span class="text-muted"><br><small>Mi wallet</small</span> {{/ifCond}} </td>
+                                                    {{/if}} <td class="text-truncate"
+                                                    style="max-width: 100px;color:rgb(0, 123, 255)">
+                                                {{to}}
+                                                {{#ifCond key to}}
+                                                <span class="text-muted"><br><small>Mi wallet</small></span>
+                                                {{/ifCond}}
                                     </td>
-                                    <td class="text-truncate" style="max-width: 100px;"> {{amount}}</td>
                                     <td class="text-truncate" style="max-width: 100px;">
-                                        {{timestamp}}<br>
+                                        <font style="color:rgba(68, 80, 92, 0.87);">{{amount}}</font>
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 100px;">
+                                        <font style="color:rgba(68, 80, 92, 0.87);">{{timestamp}}</font><br>
                                         <span class="text-muted"><small>{{prettifyDate timestamp}}</small></span>
+                                    </td>
+                                    <td style="max-width: 100px;">
+                                        <form action="/extract/:" method="get">
+                                            <input type="hidden" id="index" name="index" value="{{@index}}">
+                                            <button class="btn"><i class="fas fa-info-circle" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {{/each}}
+                                <td class="text-truncate" style="max-width: 100px;">
+                                    <div>
+                                        Ingreso<br>
+                                        Egreso <br>
+                                        <hr>
+                                        <strong>Total</strong>
+                                    </div>
+                                </td>
+                                <td colspan="4"></td>
+                                <td align="right">
+                                    <div>
+                                        {{ count }} <br>
+                                        {{ dcount }} <br>
+                                        <hr>
+                                        <strong> {{ balance }} </strong>
+                                    </div>
+                                </td>
                             </tbody>
                         </table>
                     </div>

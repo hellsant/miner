@@ -4,7 +4,7 @@
  * Set the difficulty for mining. 
  * @const {number}
 */
-const DIFFICULTY = 3;
+const DIFFICULTY = 4;
 
 /** 
  * Initial amount of the wallet

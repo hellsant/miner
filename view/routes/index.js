@@ -102,7 +102,7 @@ router.post('/validateBlock', (req, res) => {
     var count = 0;
     if (block) {
         let str = lastHash + nonce + difficulty + index + timestamp;
-        if (str === block.toStringComparable()) {
+        if (str == block.toStringComparable()) {
             data.forEach(id => {
                 block.data.forEach(tr => {
                     if (tr.id === id)

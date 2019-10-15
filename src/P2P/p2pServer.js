@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+/* global process */
+
 const Websocket = require('ws');
 const P2P_PORT = process.env.P2P_PORT || 5000 + Math.floor(Math.random() * 30);
 //const P2P_PORT = process.env.P2P_PORT || 5001;
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
-const MESSAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' }
+const MESSAGE_TYPES = { chain: 'CHAIN', transaction: 'TRANSACTION', clear_transactions: 'CLEAR_TRANSACTIONS' };
 
 /**
  * It allows to raise a P2P server in addition to adding new nodes to the network.
@@ -142,14 +144,14 @@ class p2pServer {
      * @memberof p2pServer
      */
     addPeer(host, port) {
-        let connection = new Websocket(`ws://${host}:${port}`)
+        let connection = new Websocket(`ws://${host}:${port}`);
         connection.on('error', (error) => {
-            console.log(error)
-        })
+            console.log(error);
+        });
         connection.on('open', () => {
             //this.connectToPeers();
-            this.connectSocket(connection)
-        })
+            this.connectSocket(connection);
+        });
     }
 
     /**
@@ -158,8 +160,8 @@ class p2pServer {
      * @memberof p2pServer
      */
     closeConnection(connection) {
-        console.log('closing connection')
-        this.sockets.splice(this.sockets.indexOf(connection), 1)
+        console.log('closing connection');
+        this.sockets.splice(this.sockets.indexOf(connection), 1);
     }
 
     /**
@@ -168,7 +170,7 @@ class p2pServer {
      * @memberof p2pServer
      */
     getP2Pport() {
-        return P2P_PORT
+        return P2P_PORT;
     }
 }
 /**

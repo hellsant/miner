@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+/* global process */
+
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 //const HTTP_PORT = process.env.HTTP_PORT || 3000 + Math.floor(Math.random() * 10);
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 const Blockchain = require('../blockChains/blockchain');
 const P2pServer = require('../P2P/p2pServer');
-const TransactionPool = require('../wallet/transaction-pool')
+const TransactionPool = require('../wallet/transaction-pool');
 const Wallet = require('../wallet/index');
 const Miner = require('./miner');
 
@@ -27,27 +29,27 @@ app.get('/block', (req, res) => {
 app.post('/mine', (req, res) => {
     blockChain.addBlock(req.body.data);
     p2pServer.syncChains();
-    res.redirect('/block')
-})
+    res.redirect('/block');
+});
 
 app.get('/p2pPort', (req, res) => {
-    res.json(p2pServer.getP2Pport())
-})
+    res.json(p2pServer.getP2Pport());
+});
 
 app.get('/transactions', (req, res) => {
-    res.json(transactionPool.getTransactions())
-})
+    res.json(transactionPool.getTransactions());
+});
 
 app.get('/public-key', (req, res) => {
-    res.json({ publicKey: wallet.publicKey })
-})
+    res.json({ publicKey: wallet.publicKey });
+});
 
 app.post('/transact', (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, parseFloat(amount), blockChain, transactionPool);
-    p2pServer.broadcastTransaction(transaction)
-    res.redirect('/transactions')
-})
+    p2pServer.broadcastTransaction(transaction);
+    res.redirect('/transactions');
+});
 
 app.get('/mine-transactions', (req, res) => {
     const block = miner.mine();
@@ -56,19 +58,19 @@ app.get('/mine-transactions', (req, res) => {
 });
 
 app.get('/addPeer/:port', (req, res) => {
-    p2pServer.addPeer(req.hostname, req.params.port)
-    res.redirect('back')
-})
+    p2pServer.addPeer(req.hostname, req.params.port);
+    res.redirect('back');
+});
 app.get('/wallet', (req, res) => {
     const balance = wallet.calculateBalance(blockChain);
-    res.json({"balance":balance ,"public key": wallet.publicKey})
+    res.json({ "balance": balance, "public key": wallet.publicKey });
 });
 app.get('/wallet-balance/:val', (req, res) => {
     const val = blockChain.getAllTransactionsForWallet(req.params.val);
-    res.json({val})
+    res.json({ val });
 });
 app.listen(HTTP_PORT, () => {
-    console.log('HTTP servet listening:', HTTP_PORT)
+    console.log('HTTP servet listening:', HTTP_PORT);
 });
 
 p2pServer.listen();

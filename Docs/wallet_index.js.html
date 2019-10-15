@@ -46,7 +46,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Block.html">Block</a></li><li><a href="module-Blockchain.html">Blockchain</a></li><li><a href="module-ChainUtil.html">ChainUtil</a></li><li><a href="module-config.html">config</a></li><li><a href="module-Miner.html">Miner</a></li><li><a href="module-p2pServer.html">p2pServer</a></li><li><a href="module-Transaction.html">Transaction</a></li><li><a href="module-TransactionPool.html">TransactionPool</a></li><li><a href="module-Wallet.html">Wallet</a></li></ul><h3>Classes</h3><ul><li><a href="Block.html">Block</a></li><li><a href="Block.Block.html">Block</a></li><li><a href="Blockchain.html">Blockchain</a></li><li><a href="Blockchain.Blockchain.html">Blockchain</a></li><li><a href="ChainUtil.html">ChainUtil</a></li><li><a href="Miner.html">Miner</a></li><li><a href="Miner.Miner.html">Miner</a></li><li><a href="p2pServer.html">p2pServer</a></li><li><a href="p2pServer.p2pServer.html">p2pServer</a></li><li><a href="Transaction.html">Transaction</a></li><li><a href="Transaction.Transaction.html">Transaction</a></li><li><a href="TransactionPool.html">TransactionPool</a></li><li><a href="TransactionPool.TransactionPool.html">TransactionPool</a></li><li><a href="Wallet.html">Wallet</a></li><li><a href="Wallet.Wallet.html">Wallet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DIFFICULTY">DIFFICULTY</a></li><li><a href="global.html#INITIAL_BALANCE">INITIAL_BALANCE</a></li><li><a href="global.html#MINE_RATE">MINE_RATE</a></li><li><a href="global.html#MINING_REWARD">MINING_REWARD</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Block.html">Block</a></li><li><a href="module-Blockchain.html">Blockchain</a></li><li><a href="module-ChainUtil.html">ChainUtil</a></li><li><a href="module-config.html">config</a></li><li><a href="module-Miner.html">Miner</a></li><li><a href="module-p2pServer.html">p2pServer</a></li><li><a href="module-Transaction.html">Transaction</a></li><li><a href="module-TransactionPool.html">TransactionPool</a></li><li><a href="module-Wallet.html">Wallet</a></li></ul><h3>Classes</h3><ul><li><a href="Block.html">Block</a></li><li><a href="Block.Block.html">Block</a></li><li><a href="Blockchain.html">Blockchain</a></li><li><a href="Blockchain.Blockchain.html">Blockchain</a></li><li><a href="ChainUtil.html">ChainUtil</a></li><li><a href="Miner.html">Miner</a></li><li><a href="Miner.Miner.html">Miner</a></li><li><a href="p2pServer.html">p2pServer</a></li><li><a href="p2pServer.p2pServer.html">p2pServer</a></li><li><a href="Transaction.html">Transaction</a></li><li><a href="Transaction.Transaction.html">Transaction</a></li><li><a href="TransactionPool.html">TransactionPool</a></li><li><a href="TransactionPool.TransactionPool.html">TransactionPool</a></li><li><a href="Wallet.html">Wallet</a></li><li><a href="Wallet.Wallet.html">Wallet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#COIN_BASE_BALANCE">COIN_BASE_BALANCE</a></li><li><a href="global.html#DIFFICULTY">DIFFICULTY</a></li><li><a href="global.html#INITIAL_BALANCE">INITIAL_BALANCE</a></li><li><a href="global.html#MINE_RATE">MINE_RATE</a></li><li><a href="global.html#MINING_REWARD">MINING_REWARD</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -66,9 +66,9 @@
         <article>
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-console */
 /* eslint-disable no-undef */
-const { INITIAL_BALANCE } = require('../config/config')
-const ChainUtil = require('../keys/chain-utils')
-const Transaction = require('./transaction')
+const { INITIAL_BALANCE, COIN_BASE_BALANCE } = require('../config/config');
+const ChainUtil = require('../keys/chain-utils');
+const Transaction = require('./transaction');
 /**
  * The user's wallet for transaction handling.
  *
@@ -84,6 +84,9 @@ class Wallet {
         this.balance = INITIAL_BALANCE;
         this.keyPair = ChainUtil.getKeyPair();
         this.publicKey = this.keyPair.getPublic().encode('hex');
+        this.blockchaInWallet = Wallet;
+        this.lastBlockTimestamp = 0;
+        this.lastBlockBalanceCalc = 0;
     }
 
     /**
@@ -93,7 +96,7 @@ class Wallet {
      * @memberof Wallet
      */
     sign(dataHash) {
-        return this.keyPair.sign(dataHash)
+        return this.keyPair.sign(dataHash);
     }
 
     /**
@@ -102,8 +105,8 @@ class Wallet {
      * @returns Boolean
      * @memberof Wallet
      */
-    verifyWalletKeys(key){
-        return ChainUtil.verifySignatureWallet(key) == this.publicKey
+    verifyWalletKeys(key) {
+        return ChainUtil.verifySignatureWallet(key) === this.publicKey;
     }
 
     /**
@@ -133,38 +136,55 @@ class Wallet {
 
     /**
      * Calculate the user balance of the transactions made.
-     * @param {Blockchain} blockchain blockchain on p2p network.
+     * @param {Blockchain} blockchain Blockchain to use for calculating the wallet balance.
      * @returns Number
      * @memberof Wallet
      */
     calculateBalance(blockchain) {
         let balance = this.balance;
         let transactions = [];
-        blockchain.chain.forEach(block => block.data.forEach(transaction => {
-            transactions.push(transaction);
-        }));
-        const walletInputTs = transactions.filter(transaction => transaction.input.address === this.publicKey);
-
-        let startTime = 0;
-
-        if (walletInputTs.length > 0) {
-            const recentInputT = walletInputTs.reduce(
-                (prev, current) => prev.input.timestamp > current.input.timestamp ? prev : current
-            );
-
-            balance = recentInputT.outputs.find(output => output.address === this.publicKey).amount;
-            startTime = recentInputT.input.timestamp;
+        this.lastBlockTimestamp = blockchain.getLatestBlock().timestamp;
+        if (this.lastBlockBalanceCalc === this.lastBlockTimestamp &amp;&amp; this.lastBlockBalanceCalc > 0) {
+            return balance;
+        }
+        let startBlockIndex = 0;
+        let blocks = blockchain.getChain();
+        for (let i = blocks.length - 1; i >= 0; i--) {
+            if (blocks[i].timestamp === this.lastBlockBalanceCalc) {
+                startBlockIndex = i + 1;
+                break;
+            }
+        }
+        for (let i = startBlockIndex; i &lt; blocks.length; i++) {
+            let blockTransactions = blocks[i].data;
+            for (let j = 0; j &lt; blockTransactions.length; j++) {
+                transactions.push(blockTransactions[j]);
+            }
         }
 
-        transactions.forEach(transaction => {
-            if (transaction.input.timestamp > startTime) {
-                transaction.outputs.find(output => {
-                    if (output.address === this.publicKey) {
-                        balance += output.amount;
-                    }
-                });
+        const walletInputsTransacions = transactions.filter(transaction => transaction.input.address === this.publicKey);
+        const walletDepositTransactions = transactions.filter(transaction => {
+            for (let i = 1; i &lt; transaction.outputs.length; i++) {
+                if (transaction.outputs[i].address === this.publicKey &amp;&amp; transaction.input.address !== this.publicKey) return true;
             }
+            return false;
         });
+
+        for (let i = 0; i &lt; walletInputsTransacions.length; i++) {
+            for (let j = 1; j &lt; walletInputsTransacions[i].outputs.length; j++) {
+                balance -= walletInputsTransacions[i].outputs[j].amount;
+            }
+        }
+
+        for (let i = 0; i &lt; walletDepositTransactions.length; i++) {
+            for (let j = 1; j &lt; walletDepositTransactions[i].outputs.length; j++) {
+                if (walletDepositTransactions[i].outputs[j].address === this.publicKey) {
+                    balance += walletDepositTransactions[i].outputs[j].amount;
+                }
+            }
+        }
+        this.lastBlockBalanceCalc = this.lastBlockTimestamp;
+        this.balance = balance;
         return balance;
     }
 
@@ -176,9 +196,12 @@ class Wallet {
      * @memberof Wallet
      */
     static blockchainWallet() {
-        const blockchainWallet = new this();
-        blockchainWallet.address = 'CoinBase-0000FFFF'
-        return blockchainWallet
+        if (!Wallet.blockchaInWallet) {
+            Wallet.blockchaInWallet = new this();
+            Wallet.blockchaInWallet.address = 'CoinBase-0000FFFF';
+            Wallet.blockchaInWallet.balance = COIN_BASE_BALANCE;
+        }
+        return Wallet.blockchaInWallet;
     }
 
     /**
@@ -191,7 +214,7 @@ class Wallet {
         wallet
         publicKey:    ${this.publicKey.toString()}
         balance:      ${this.balance}
-        `
+        `;
     }
 }
 /** 
@@ -212,7 +235,7 @@ module.exports = Wallet;</code></pre>
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Oct 02 2019 23:17:43 GMT-0400 (GMT-04:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Oct 14 2019 22:47:12 GMT-0400 (GMT-04:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

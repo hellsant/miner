@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const Transaction = require('../wallet/transaction')
-const Wallet = require('../wallet/index')
+const Transaction = require('../wallet/transaction');
+const Wallet = require('../wallet/index');
 
 /**
  * This is responsible for carrying out mining.
@@ -43,5 +43,5 @@ class Miner {
 /** 
  * This is responsible for carrying out mining.
  * @exports Miner 
-*/
+ */
 module.exports = Miner;

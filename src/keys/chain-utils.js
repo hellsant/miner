@@ -18,7 +18,7 @@ class ChainUtil {
      * @memberof ChainUtil
      */
     static getKeyPair() {
-        return ec.genKeyPair()
+        return ec.genKeyPair();
     }
 
     /**
@@ -35,7 +35,7 @@ class ChainUtil {
      * Create the hash 512 for the received parameter
      * @param {object} data information that will be hashed
      * @static
-     * @returns  String | sha512
+     * @returns  String | SHA512
      * @memberof ChainUtil
      */
     static hash(data) {
@@ -52,7 +52,12 @@ class ChainUtil {
      * @memberof ChainUtil
      */
     static verifySignature(publicKey, signature, dataHash) {
-        return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature)
+        try {
+            return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature);
+        } catch (error) {
+            console.log("signature verification error for public key: " + publicKey + "; error message: " + error.message);
+            return false;
+        }
     }
 
     /**
@@ -63,7 +68,7 @@ class ChainUtil {
      * @memberof ChainUtil
      */
     static verifySignatureWallet(privateKey) {
-        return ec.keyFromPrivate(privateKey).getPublic('hex')
+        return ec.keyFromPrivate(privateKey).getPublic('hex');
     }
 }
 

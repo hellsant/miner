@@ -20,7 +20,7 @@ module.exports = app => {
     app.set('view engine', '.hbs');
 
     //middelwares
-app.use(express.static(path.join(__dirname, 'public')))
+    app.use(express.static(path.join(__dirname, 'public')));
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
@@ -28,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')))
     // routes
     routes(app);
     //static files
-    app.use(express.static('/public', path.join(__dirname, '../public')))
+    app.use(express.static('/public', path.join(__dirname, '../public')));
     //errorhandlers
 
-    return app
-}
+    return app;
+};

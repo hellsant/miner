@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 const ChainUtil = require('../keys/chain-utils');
-const { MINING_REWARD } = require('../config/config')
+const { MINING_REWARD } = require('../config/config');
 
 /**
  *
@@ -71,7 +71,7 @@ class Transaction {
         }
         return Transaction.transactionWithOutputs(senderWallet, [
             { amount: senderWallet.balance - amount, address: senderWallet.publicKey },
-            { amount, address: recipient }
+            { amount: amount, address: recipient }
         ]);
     }
 
@@ -84,9 +84,10 @@ class Transaction {
      * @memberof Transaction
      */
     static rewardTransaction(minerWallet, blockchainWallet) {
-        return Transaction.transactionWithOutputs(blockchainWallet, [{
-            amount: MINING_REWARD, address: minerWallet.publicKey, blockchainWalletaddress: blockchainWallet.address 
-        }]);
+        return Transaction.transactionWithOutputs(blockchainWallet, [
+            { amount: blockchainWallet.balance, address: blockchainWallet.publicKey,  blockchainWalletaddress: blockchainWallet.address },
+            { amount: MINING_REWARD, address: minerWallet.publicKey,  blockchainWalletaddress: blockchainWallet.address }
+        ]);
     }
 
     /**
@@ -102,7 +103,7 @@ class Transaction {
             amount: senderWallet.balance,
             address: senderWallet.publicKey,
             signature: senderWallet.sign(ChainUtil.hash(transaction.outputs))
-        }
+        };
     }
 
     /**

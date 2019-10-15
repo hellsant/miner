@@ -13,10 +13,11 @@ helpers.ifCond = (v1, v2, options) => {
 };
 
 helpers.inOutAmount = (key, from, amount) => {
-  return (key == from) ? -amount : amount;
+  return (key === from) ? -amount : amount;
 };
 
 helpers.val = (v1, v2) => {
-  return (v1 == v2) ? v1 : v2;
+  return (v1 === v2) ? v1 : v2;
 };
+
 module.exports = helpers;

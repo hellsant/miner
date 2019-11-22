@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* global errorNotification, __dirname, process */
-
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');

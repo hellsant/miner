@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+require('dotenv').config();
 const express = require('express');
 const Blockchain = require('../../src/blockChains/blockchain');
 const P2pServer = require('../../src/P2P/p2pServer');
@@ -17,9 +18,9 @@ const router = express.Router();
 p2pServer.listen();
 
 paypal.configure({
-    'mode': 'sandbox', //sandbox or live
-    'client_id': 'ASPRF5TMQkha2S1OVQljifwYAfUF34N5Qxk4CsNiR7j1x8LR9UNl5xPHww0fnAhkzX91rexK62ovNvHj',
-    'client_secret': 'ELA7qG1jwsUCuHNBjFRPv9YY4Ad6S55XW2QisqJwSjrdbbTc3ZnDw4PYiSelv1kDbGgdUF1-jhwm4LxO'
+    'mode': process.env.MODE, //sandbox or live
+    'client_id': process.env.CLIENT_ID,
+    'client_secret': process.env.CLIENT_SECRET 
 });
 
 router.get('/', (req, res) => {
@@ -159,8 +160,8 @@ router.post('/pay', (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:4000/success/?total=" + valor,
-            "cancel_url": "http://localhost:4000/cancel"
+            "return_url": process.env.URL +"/success/?total=" + valor,
+            "cancel_url": process.env.URL +"/cancel"
         },
         "transactions": [{
             "item_list": {
